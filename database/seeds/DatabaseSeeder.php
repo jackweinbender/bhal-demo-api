@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call( 'LettersTableSeeder' );
         $this->call( 'RootsTableSeeder' );
+        $this->call( 'LemmasTableSeeder' );
 
         Model::reguard();
     }
