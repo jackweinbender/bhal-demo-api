@@ -16,12 +16,16 @@ class CreateRootsTable extends Migration
 
           $table->increments('id');
           $table->string('root');
-          // $table->string('rootSlug')
-          //   ->unique();
-          // $table->integer('homonymNumber')
-          //   ->default(1)
-          //   ->unsigned();
-          // $table->string('rootDisplay');
+          $table->string('rootSlug')
+            ->unique()
+            ->nullable()
+            ->default(NULL);
+          $table->integer('homonymNumber')
+            ->unsigned()
+            ->default(1);
+          $table->string('rootDisplay')
+            ->nullable()
+            ->default(NULL);
           $table->string('letter_name');
 
           /* Relational bits */
