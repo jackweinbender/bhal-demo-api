@@ -15,17 +15,18 @@ class CreateRootsTable extends Migration
         Schema::create('roots', function(Blueprint $table){
 
           $table->increments('id');
-          $table->string('rootSlug')
-            ->unique();
           $table->string('root');
-          $table->integer('homonymNumber')
-            ->default(1)
-            ->unsigned();
-          $table->string('rootDisplay');
+          // $table->string('rootSlug')
+          //   ->unique();
+          // $table->integer('homonymNumber')
+          //   ->default(1)
+          //   ->unsigned();
+          // $table->string('rootDisplay');
           $table->string('letter_name');
 
+          /* Relational bits */
           $table->foreign('letter_name')->references('name')->on('letters');
-
+          // Timestamps
           $table->timestamps();
         });
 
