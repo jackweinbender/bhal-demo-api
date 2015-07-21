@@ -13,7 +13,7 @@ class CreateLettersTable extends Migration
     public function up()
     {
         Schema::create('letters', function(Blueprint $table){
-          $table->increments('_id');
+          $table->increments('id');
           $table->string('letter');
           $table->string('name');
           $table->string('transliteration');
