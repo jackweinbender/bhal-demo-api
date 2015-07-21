@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call( 'LettersTableSeeder' );
+        $this->call( 'RootsTableSeeder' );
 
         Model::reguard();
     }
