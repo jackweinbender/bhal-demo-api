@@ -12,8 +12,11 @@ class LettersTableSeeder extends Seeder
      */
     public function run()
     {
-        // Retrieves the raw response from teh API endpoint
-        $raw = file_get_contents('http://bhal-api.semitic.us/api/v1/letters');
+        // Sets input file
+        $input = storage_path('seeds/letters.json');
+
+        // Retrieves the raw response from JSON file
+        $raw = file_get_contents($input);
 
         // encodes the JSON response into a PHP object
         $letters = json_decode($raw);
@@ -21,11 +24,9 @@ class LettersTableSeeder extends Seeder
         // Creates a record in teh Letters table for each
         // letter retrieved; typecast as an array for Eloquent
         foreach ($letters->letters as $letter) {
-          // Reassign "_id" to "id";
-          $letter->id = $letter->_id;
-          unset($letter->_id);
 
           Letter::create((array) $letter);
+
         }
 
 
