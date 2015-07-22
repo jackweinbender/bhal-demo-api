@@ -11,4 +11,10 @@ class Lemma extends Model
     return $this->belongsTo('App\Letter', 'letter_name', 'name');
 
   }
+
+  public function definitions(){
+
+    return $this->hasMany('App\Definition');
+
+  }
 }
