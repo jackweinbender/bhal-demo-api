@@ -14,3 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('api/v1/letters', 'LettersController@index');
+Route::get('api/v1/letters/{id}', 'LettersController@show');
+
+// Route::get('api/v1/roots', 'RootsController@index');
+Route::get('api/v1/roots/{id}', 'RootsController@show');
+
+// Route::get('api/v1/lemmas', 'LemmasController@index');
+Route::get('api/v1/lemmas/{id}', 'LemmasController@show');
+
+// Route::get('api/v1/definitions', 'DefinitionsController@index');
+Route::get('api/v1/definitions/{id}', 'DefinitionsController@show');
