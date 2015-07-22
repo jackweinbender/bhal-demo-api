@@ -14,14 +14,16 @@ class LemmasAndDefinitionsTableSeeder extends Seeder
      */
     public function run()
     {
-      // Sets input file
+      // Increase memory for this bit
+      ini_set('memory_limit', '256M');
+
+      // Set input file
       $input = storage_path('seeds/content_dump.json');
 
-      // Retrieves the raw response from JSON file
+      // Retrieve the raw response from JSON file
       $raw = file_get_contents($input);
 
-      ini_set('memory_limit', '256M');
-      // encodes the JSON response into a PHP object
+      // Encode the JSON response into a PHP object
       $entries = json_decode($raw);
 
       foreach ($entries as $entry) {
@@ -29,21 +31,34 @@ class LemmasAndDefinitionsTableSeeder extends Seeder
         // Get the right letter object for relationship
         $letter = Letter::get()->where('letter', $entry->header->letter)->first();
 
+        // Array to hold new App\Definitnion for saveMany
+        $new_definitions = [];
+
         // Build the Lemma object, save as $lemma
         $lemma = $this->makeLemma($entry, $letter);
 
         // Build the Definition objects
         foreach ($entry->definitions as $definition) {
 
+          // Make the new App\Definition; Returns new App\Definitnion
           $def = $this->makeDefinition($definition, $lemma);
 
+          // Add new $def to the $new_definitions Array
+          $new_definitions[] = $def;
+
         }
+        // Save the new App\Lemma to the associated App\Letter
+        $letter->lemmas()->save($lemma);
+
+        // Bulk-assign the App\Definition Array to the associated App\Lemma
+        $lemma->definitions()->saveMany($new_definitions);
 
       }
+
     }
 
     /**
-     * Creates a Lemma object, assigns properties, and saves
+     * Creates a Lemma object, assigns properties
      *
      * @param  Entry JSON object $entry
      * @param  App\Letter $letter
@@ -58,15 +73,11 @@ class LemmasAndDefinitionsTableSeeder extends Seeder
       $new->page      = $entry->header->page;
       $new->language  = $entry->header->language;
 
-      $new->letter_name = $letter->name;
-
-      $new->save();
-
       return $new;
     }
 
     /**
-     * Creates a Lemma object, assigns properties, and saves
+     * Creates a Lemma object, assigns properties
      *
      * @param  Object $definition
      * @param  App\Lemma $lemma
@@ -79,9 +90,6 @@ class LemmasAndDefinitionsTableSeeder extends Seeder
       $new->title = $definition->title;
       $new->body = $definition->body;
       $new->content = $definition->content;
-      $new->lemma_id = $lemma->id;
-
-      $new->save();
 
       return $new;
 

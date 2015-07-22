@@ -21,19 +21,21 @@ class RootsTableSeeder extends Seeder
 
           // Get the proper App\Letter for this relationship
           $letter = Letter::get()->where("name", $letter_key)->first();
-            $letter->toArray();
 
           // Create a new array to store newly created roots
           $new_roots = [];
 
           // Create a new App\Root for each object in the Array
           foreach ($root_array as $root) {
+
+            // Instantiate a new Root
             $new = new Root;
-            $new->letter_name = $letter_key;
+
+            // Assign properties
             $new->root = $root;
 
             // Save new App\Root to the DB
-            $new->save();
+            //$new->save();
 
             // Add the new App\Root to the $new_root Array
             $new_roots[] = $new;
