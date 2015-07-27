@@ -13,17 +13,16 @@ class CreateLemmasTable extends Migration
     public function up()
     {
         Schema::create('lemmas', function(Blueprint $table){
-
+          /**
+           * Properties
+           */
           $table->increments('id');
           $table->integer('entry');
           $table->string('word');
-          $table->string('root')
-            ->nullable();
           $table->string('homonymNumber')
             ->nullable();
           $table->integer('strongs')
-            ->nullable()
-            ->default(NULL);
+            ->nullable();
           $table->integer('page');
           $table->string('language');
           $table->string('speech')
@@ -36,7 +35,9 @@ class CreateLemmasTable extends Migration
             ->nullable();
           $table->string('pattern')
             ->nullable();
-          // MetaData
+          /**
+           * MetaData
+           */
           $table->boolean('isReconstructed')
             ->default(FALSE);
           $table->boolean('correctedTsade')
@@ -46,14 +47,20 @@ class CreateLemmasTable extends Migration
           $table->boolean('isRootEntry')
             ->default(FALSE);
           $table->string('rootAssignNote')
-            ->nullable()
-            ->default(NULL);
-
-          // Relational bits
+            ->nullable();
+          /**
+           * Relational bits
+           */
+          // App\Letter
           $table->string('letter_name');
           $table->foreign('letter_name')->references('name')->on('letters');
-
-          // Timestamps
+          // App\Root
+          $table->integer('root_id')
+            ->nullable();
+          $table->foreign('root_id')->references('id')->on('roots');
+          /**
+           * Timestamps
+           */
           $table->timestamps();
 
         });
