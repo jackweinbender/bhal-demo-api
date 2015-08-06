@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Response;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -17,7 +18,9 @@ class LettersController extends Controller
      */
     public function index()
     {
-        return Letter::get();
+      return response(
+        Letter::with('roots')->get()
+      )->header('Content-Type', 'application/vnd.api+json');
     }
 
     /**
@@ -49,7 +52,9 @@ class LettersController extends Controller
      */
     public function show($id)
     {
-        return Letter::with('roots')->find($id);
+      return response(
+        Letter::with(['roots', 'lemmas'])->find($id)->JsonApize()
+      )->header('Content-Type', 'application/vnd.api+json');
     }
 
     /**

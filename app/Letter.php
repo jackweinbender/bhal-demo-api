@@ -2,11 +2,17 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\JsonApi;
 
-class Letter extends Model
+class Letter extends JsonApi
 {
 
+    protected $type = 'letter';
+    protected $hidden = array(
+      'id',
+      'created_at',
+      'updated_at'
+    );
     /**
      * Letter hasMany Roots
      * @return App\Root
@@ -25,5 +31,14 @@ class Letter extends Model
 
       return $this->hasMany('App\Lemma', 'letter_name', 'name');
 
+    }
+
+    protected function attributes(){
+      return array(
+        'letter' => (string) $this->letter,
+        'name' => (string) $this->name,
+        'transliteration' => (string) $this->transliteration,
+        'asciitranslit' => (string) $this->asciitranslit,
+      );
     }
 }
