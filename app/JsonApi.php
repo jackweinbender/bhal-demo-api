@@ -2,79 +2,64 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
-abstract class JsonApi extends Model
+/**
+ * TODO: Includes and relationships
+ */
+
+
+class JsonApi
 {
-    // getFillable() // Fillable attributes
-    // getKey() // Get PK value
+    public $data;
 
-    protected $included = array();
+    public $included;
 
-    public function relationships(){
+    public $meta;
 
-      $relationships = $this->getRelations();
+    public function __construct(){
 
-      if($relationships == []){ return false; }
 
-      $rels = array();
-
-      foreach ($relationships as $relName => $relValue) {
-        if($relValue->isEmpty()){ continue; }
-        $rels[$relName]['data'] = $this->makeRid($relValue);
-        $this->included = array_merge($this->included, $this->getIncluded($relValue));
-      }
-
-      return $rels;
-    }
-    public function getIncluded($collection){
-      return $collection->map(function($item, $key){
-        return $item->toArray();
-      })->toArray();
-    }
-    protected function makeRid($related){
-      if(method_exists($related, 'each')){
-
-        $rid = $related->map(function ($item, $key) {
-            return array(
-              'id' => $item->getKey(),
-              'type' => $item->type
-            );
-        });
-
-        return $rid->all();
-      };
-
-      return $related->toArray();
 
     }
 
-    public function toArray(){
+    public function item($model){
 
+      $this->data = $this->makeData($model);
+
+      return $this;
+    }
+
+    public function collection(Collection $collection){
+
+      $this->data = $collection->map(function($item){
+        return $this->makeData($item);
+      })->all();
+
+      return $this;
+
+    }
+
+    public function included(){
+
+    }
+
+    public function send(){
+
+    }
+
+    protected function makeData($model){
       $item = array(
-          'id' => $this->getKey(),
-          'type' => $this->type,
-          'attributes' => $this->attributes(),
+        'id' => $model->getKey(),
+        'type' => $model->getModelType(),
+        'attributes' => $model->attributes()
       );
 
-      if($this->relationships() != false){
-        $item['relationships'] = $this->relationships();
-      }
+      $relationships = $model->getAndMakeRelationships();
+
+      if($relationships){ $item['relationships'] = $relationships; }
 
       return $item;
+
     }
-
-  public function JsonApize(){
-
-    $jsonApi['data'] = $this->toArray();
-
-    if($this->included != []){
-      //dd($this->included);
-      $jsonApi['included'] = $this->included;
-    }
-
-    return $jsonApi;
-
-  }
-
 }

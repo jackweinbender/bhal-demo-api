@@ -4,10 +4,9 @@ namespace App;
 
 use App\JsonApi;
 
-class Letter extends JsonApi
+class Letter extends JsonApiModelAbstract
 {
 
-    protected $type = 'letter';
     protected $hidden = array(
       'id',
       'created_at',
@@ -33,7 +32,7 @@ class Letter extends JsonApi
 
     }
 
-    protected function attributes(){
+    public function attributes(){
       return array(
         'letter' => (string) $this->letter,
         'name' => (string) $this->name,

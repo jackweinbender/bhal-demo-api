@@ -4,7 +4,7 @@ namespace App;
 
 use App\JsonApi;
 
-class Root extends JsonApi
+class Root extends JsonApiModelAbstract
 {
     protected $type = 'root';
 
@@ -14,7 +14,7 @@ class Root extends JsonApi
 
     }
 
-    protected function attributes(){
+    public function attributes(){
       return array(
         'root' => (string) $this->root,
         'rootSlug' => (string) $this->rootSlug,
