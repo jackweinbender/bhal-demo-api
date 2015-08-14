@@ -8,6 +8,7 @@ use Response;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Letter;
+use App\JsonApi;
 
 class LettersController extends Controller
 {
@@ -52,9 +53,11 @@ class LettersController extends Controller
      */
     public function show($id)
     {
-      return response(
-        Letter::with('roots')->find($id)->JsonApize()
-      )->header('Content-Type', 'application/vnd.api+json');
+      $letter = Letter::with('roots')->find($id);
+
+      $response = new JsonApi();
+
+      return $response->item($letter)->data;
     }
 
     /**
