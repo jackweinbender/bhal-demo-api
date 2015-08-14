@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Lemma extends Model
+class Lemma extends JsonApiModelAbstract
 {
   public function letter(){
 

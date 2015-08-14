@@ -30,31 +30,51 @@ abstract class JsonApiModelAbstract extends Model implements JsonApiModelInterfa
 
   }
 
-  public function getAndMakeRelationships(){
-    if($this->getRelations() == []){ return false; }
-
-    $relationships = [];
-
-    foreach ($this->getRelations() as $relation => $related) {
-      if($related->isEmpty()){ break; }
-      $relationships[$relation] = $this->makeRidObjects($related);
-    }
-
-    if($relationships == []){ return false; }
-
-    return $relationships;
-
+  /**
+   * Returns the Model as a resource Object.
+   *
+   * @return Array
+   */
+  public function resourceObject(){
+    return array(
+      'id' => $this->getKey(),
+      'type' => $this->getModelType(),
+      'attributes' => $this->attributes(),
+    );
   }
 
-  protected function makeRidObjects($collection){
+  /**
+   * Returns the a reference ID object for the model
+   *
+   * @return Array
+   */
+  public function rid(){
+    return array(
+      'type' => $this->getModelType(),
+      'id' => $this->getKey(),
+    );
+  }
 
-    return $collection->map(function($item){
-      return array(
-        'id' => $item->getKey(),
-        'type' => $item->getModelType(),
-      );
-    })->all();
 
+  /**
+   * Returns an object
+   * @return [type] [description]
+   */
+  public function includedObject(){
+    return array(
+       $this->getUniqueKey() => $this->resourceObject(),
+    );
+  }
+
+  /**
+   * Generates a unique ID based on the model type and its DB key
+   * This allows multiple models to reference the same related
+   * obect without duplicating it in the payload.
+   *
+   * @return String
+   */
+  public function getUniqueKey(){
+    return $this->getmodelType() . $this->getKey();
   }
 
   /**

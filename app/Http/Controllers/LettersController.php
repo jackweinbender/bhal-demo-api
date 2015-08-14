@@ -19,9 +19,11 @@ class LettersController extends Controller
      */
     public function index()
     {
-      return response(
-        Letter::get()
-      )->header('Content-Type', 'application/vnd.api+json');
+      $letters = Letter::with('roots')->get();
+
+      $response = new JsonApi();
+
+      return $response->collection($letters)->send();
     }
 
     /**
@@ -53,11 +55,11 @@ class LettersController extends Controller
      */
     public function show($id)
     {
-      $letter = Letter::with('roots')->find($id);
+      $letter = Letter::with(['roots'])->find($id);
 
       $response = new JsonApi();
 
-      return $response->item($letter)->data;
+      return $response->includes(['roots'])->item($letter)->send();
     }
 
     /**
