@@ -118,7 +118,7 @@ class JsonApi
         }
 
         // Otherwise set the relationship key and value
-        $relationships[$relation] = $related->map(function($item){
+        $relationships[$relation]['data'] = $related->map(function($item){
           return $item->rid();
         });
 

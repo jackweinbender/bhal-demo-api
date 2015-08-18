@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Root;
+use App\JsonApi;
 
 class RootsController extends Controller
 {
@@ -17,7 +18,13 @@ class RootsController extends Controller
      */
     public function index()
     {
-      return Root::get();
+      $input = \Input::get('filter');
+
+      $roots = Root::find(explode(',', $input['id']));
+
+      $response = new JsonApi();
+
+      return $response->collection($roots)->send();
     }
 
     /**
