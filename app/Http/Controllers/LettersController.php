@@ -8,7 +8,7 @@ use Response;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Letter;
-use App\JsonApi;
+use Jackweinbender\LaravelJsonapi\JsonApi;
 
 class LettersController extends Controller
 {

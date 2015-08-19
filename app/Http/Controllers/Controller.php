@@ -6,7 +6,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Response;
-use App\JsonApi;
+use Jackweinbender\LaravelJsonapi\JsonApi;
 
 abstract class Controller extends BaseController
 {

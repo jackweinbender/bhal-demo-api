@@ -1,0 +1,25 @@
+{
+    "name": "jackweinbender/laravel-jsonapi",
+    "description": "JsonApi helper and convenience classes for Laravel.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jack Weinbender",
+            "email": "jack.weinbender@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "~5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jackweinbender\\LaravelJsonapi\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.1",
+        "mockery/mockery": "~0.9"
+    },
+}

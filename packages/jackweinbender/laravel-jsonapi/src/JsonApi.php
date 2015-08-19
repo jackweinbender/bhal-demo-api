@@ -1,13 +1,8 @@
 <?php
 
-namespace App;
+namespace Jackweinbender\LaravelJsonapi;
 
 use Illuminate\Database\Eloquent\Collection;
-
-/**
- * TODO: Includes and relationships
- */
-
 
 class JsonApi
 {

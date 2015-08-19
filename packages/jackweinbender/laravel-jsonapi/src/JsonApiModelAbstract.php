@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Jackweinbender\LaravelJsonapi;
 
 use Illuminate\Database\Eloquent\Model;
 use \ReflectionClass;

@@ -2,7 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Jackweinbender\LaravelJsonapi\JsonApiModelAbstract;
+use Jackweinbender\LaravelJsonapi\JsonApi;
 
 class Lemma extends JsonApiModelAbstract
 {

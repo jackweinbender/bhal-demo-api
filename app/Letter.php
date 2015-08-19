@@ -2,7 +2,8 @@
 
 namespace App;
 
-use App\JsonApi;
+use Jackweinbender\LaravelJsonapi\JsonApiModelAbstract;
+use Jackweinbender\LaravelJsonapi\JsonApi;
 
 class Letter extends JsonApiModelAbstract
 {
