@@ -79,7 +79,11 @@ class RootsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->input('data');
+
+        return array(
+          'data' => $input
+        );
     }
 
     /**

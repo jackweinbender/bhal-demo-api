@@ -21,6 +21,8 @@ Route::get('api/v1/letters/{id}', 'LettersController@show');
 
 Route::get('api/v1/roots', 'RootsController@index');
 Route::get('api/v1/roots/{id}', 'RootsController@show');
+Route::put('api/v1/roots/{id}', 'RootsController@update');
+Route::patch('api/v1/roots/{id}', 'RootsController@update');
 
 // Route::get('api/v1/lemmas', 'LemmasController@index');
 Route::get('api/v1/lemmas/{id}', 'LemmasController@show');
