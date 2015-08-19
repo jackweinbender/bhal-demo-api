@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Root;
-use App\JsonApi;
+use \Input;
 
 class RootsController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -18,23 +17,15 @@ class RootsController extends Controller
      */
     public function index()
     {
-      $input = \Input::get('filter');
+      $input = Input::get('filter');
+      if(!$input){
+
+        $roots = Root::get();
+        return $this->res->collection($roots)->send();
+      }
 
       $roots = Root::find(explode(',', $input['id']));
-
-      $response = new JsonApi();
-
-      return $response->collection($roots)->send();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
+      return $this->res->collection($roots)->send();
     }
 
     /**
@@ -45,7 +36,18 @@ class RootsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Input::get('data.type') != 'root'){
+          return response('Invalid JSON Object', 400);
+        }
+        if(!Input::get('data.attributes')){
+          return response('No Attributes sent', 400);
+        }
+
+        $root = new Root;
+        $root->fill(Input::get('data.attributes'));
+        $root->save();
+
+        return $this->res->item($root)->send();
     }
 
     /**
@@ -56,18 +58,7 @@ class RootsController extends Controller
      */
     public function show($id)
     {
-        return Root::find($id); // Needs with() when relationship is explicit
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->res->item(Root::find($id))->send();
     }
 
     /**
@@ -79,11 +70,18 @@ class RootsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->input('data');
+        if(!Input::get('data.attributes')){
+          return response('Malformed JSON', 400);
+        }
 
-        return array(
-          'data' => $input
-        );
+        $attrs = Input::get('data.attributes');
+
+        $root = Root::find($id);
+          $root->fill($attrs);
+          $root->save();
+
+        return $this->res->item($root)->send();
+
     }
 
     /**
@@ -94,6 +92,12 @@ class RootsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $root = Root::find($id);
+        if($root){
+          $root->delete();
+          return response(['message'=>"Successfully deleted root with id $id"], 200);
+        }
+
+        return response(['message'=>"Unable to delete Root with id $id"], 400);
     }
 }

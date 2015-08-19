@@ -20,9 +20,11 @@ Route::get('api/v1/letters', 'LettersController@index');
 Route::get('api/v1/letters/{id}', 'LettersController@show');
 
 Route::get('api/v1/roots', 'RootsController@index');
+Route::post('api/v1/roots', 'RootsController@store');
 Route::get('api/v1/roots/{id}', 'RootsController@show');
 Route::put('api/v1/roots/{id}', 'RootsController@update');
 Route::patch('api/v1/roots/{id}', 'RootsController@update');
+Route::delete('api/v1/roots/{id}', 'RootsController@destroy');
 
 // Route::get('api/v1/lemmas', 'LemmasController@index');
 Route::get('api/v1/lemmas/{id}', 'LemmasController@show');

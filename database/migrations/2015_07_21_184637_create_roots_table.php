@@ -26,7 +26,9 @@ class CreateRootsTable extends Migration
           $table->string('rootDisplay')
             ->nullable()
             ->default(NULL);
-          $table->string('letter_name');
+          $table->string('letter_name')
+            ->nullable()
+            ->default(NULL);
 
           /* Relational bits */
           $table->foreign('letter_name')->references('name')->on('letters');
