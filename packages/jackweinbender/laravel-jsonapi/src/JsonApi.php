@@ -21,7 +21,7 @@ class JsonApi
 
     }
 
-    public function item($model){
+    public function item(JsonApiModelAbstract $model){
 
       $this->data = $this->makeData($model);
 
@@ -44,7 +44,7 @@ class JsonApi
      * @param  Array  $includes
      * @return $this
      */
-    public function includes(Array $includes){
+  public function includes(Array $includes){
 
       $this->includes = $includes;
 
@@ -80,7 +80,7 @@ class JsonApi
 
     }
 
-    public function makeData($model){
+    public function makeData(JsonApiModelAbstract $model){
       $item = $model->resourceObject();
 
       $relationships = $this->getRelationships($model);
