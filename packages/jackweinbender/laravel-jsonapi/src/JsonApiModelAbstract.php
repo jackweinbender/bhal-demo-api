@@ -99,7 +99,7 @@ abstract class JsonApiModelAbstract extends Model implements JsonApiModelInterfa
    */
   protected function setModelType(){
 
-    $this->modelType = $this->getClassName();
+    $this->modelType = $this->getClassName() . 's';
 
     return $this->modelType;
 
