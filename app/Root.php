@@ -19,9 +19,9 @@ class Root extends JsonApiModelAbstract
     public function attributes(){
       return array(
         'root' => (string) $this->root,
-        'rootSlug' => (string) $this->rootSlug,
-        'homonymNumber' => (integer) $this->homonymNumber,
-        'rootDisplay' => (string) $this->rootDisplay,
+        'root-slug' => (string) $this->rootSlug,
+        'homonym-number' => (integer) $this->homonymNumber,
+        'root-display' => (string) $this->rootDisplay,
       );
     }
 

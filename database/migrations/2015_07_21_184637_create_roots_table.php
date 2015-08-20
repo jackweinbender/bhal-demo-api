@@ -21,8 +21,8 @@ class CreateRootsTable extends Migration
             ->nullable()
             ->default(NULL);
           $table->integer('homonymNumber')
-            ->unsigned()
-            ->default(1);
+            ->nullable()
+            ->default(NULL);
           $table->string('rootDisplay')
             ->nullable()
             ->default(NULL);

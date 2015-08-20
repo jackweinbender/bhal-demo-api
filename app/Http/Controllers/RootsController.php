@@ -90,7 +90,7 @@ class RootsController extends Controller
 
         $root = Root::find($id);
           $root->fill($attrs);
-          $root->save();
+        $root->save();
 
         return $this->res->item($root)->send();
 
