@@ -25,7 +25,12 @@ class RootsControllerTest extends TestCase
     }
     public function testPutRouteWithPayload()
     {
-      $payload['data']['attributes']['root'] = 'ROOT';
+      $payload['data']['type'] = 'roots';
+      $payload['data']['attributes'] = array(
+        "root" => "TST",
+        "rootDisplay" => "tst",
+        "homonymNumber" => 15,
+      );
       $this->put('/api/v1/roots/1', $payload)
         ->seeJson();
     }
@@ -34,11 +39,40 @@ class RootsControllerTest extends TestCase
     public function testPatchRouteWithoutPayload()
     {
       $this->patch('/api/v1/roots/1')
+        ->see('No Data Sent')
+        ->assertResponseStatus(400);
+    }
+    public function testPatchRouteWithoutType()
+    {
+      $payload['data'] = 'wrong';
+
+      $this->patch('/api/v1/roots/1', $payload)
+        ->see('No Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPatchRouteWithWrongType()
+    {
+      $payload['data']['type'] = 'wrong';
+
+      $this->patch('/api/v1/roots/1', $payload)
+        ->see('Wrong Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPatchRouteWithouAttributes()
+    {
+      $payload['data']['type'] = 'roots';
+      $this->patch('/api/v1/roots/1', $payload)
+        ->see('No Attributes sent')
         ->assertResponseStatus(400);
     }
     public function testPatchRouteWithPayload()
     {
-      $payload['data']['attributes']['root'] = 'ROOT';
+      $payload['data']['type'] = 'roots';
+      $payload['data']['attributes'] = array(
+        "root" => "TST",
+        "rootDisplay" => "tst",
+        "homonymNumber" => 15,
+      );
       $this->patch('/api/v1/roots/1', $payload)
         ->seeJson();
     }
@@ -51,7 +85,7 @@ class RootsControllerTest extends TestCase
     }
     public function testPostRouteWithPayload()
     {
-      $payload['data']['type'] = 'root';
+      $payload['data']['type'] = 'roots';
       $payload['data']['attributes'] = array(
         "root" => "TST",
         "rootDisplay" => "tst",

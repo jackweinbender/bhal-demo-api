@@ -36,10 +36,13 @@ class RootsController extends Controller
      */
     public function store(Request $request)
     {
-        if(Input::get('data.type') != 'root'){
-          return response('Invalid JSON Object', 400);
+        if(!Input::has('data')){
+          return response('No Data Sent', 400);
         }
-        if(!Input::get('data.attributes')){
+        if(!Input::has('data.type')){
+          return response('No Type Specified', 400);
+        }
+        if(!Input::has('data.attributes')){
           return response('No Attributes sent', 400);
         }
 
@@ -70,8 +73,17 @@ class RootsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(!Input::get('data.attributes')){
-          return response('Malformed JSON', 400);
+        if(!Input::has('data')){
+          return response('No Data Sent', 400);
+        }
+        if(!Input::has('data.type')){
+          return response('No Type Specified', 400);
+        }
+        if(Input::get('data.type') != 'roots'){
+          return response('Wrong Type Specified', 400);
+        }
+        if(!Input::has('data.attributes')){
+          return response('No Attributes sent', 400);
         }
 
         $attrs = Input::get('data.attributes');

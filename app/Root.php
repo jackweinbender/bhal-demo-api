@@ -7,7 +7,7 @@ use Jackweinbender\LaravelJsonapi\JsonApi;
 
 class Root extends JsonApiModelAbstract
 {
-    protected $type = 'root';
+
     protected $fillable = ['root', 'rootSlug', 'homonymNumber', 'rootDisplay'];
 
     public function letter(){
