@@ -148,7 +148,7 @@ return [
          * Third party Providers
          */
         Zizaco\Entrust\EntrustServiceProvider::class,
-
+        Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*
