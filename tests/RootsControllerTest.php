@@ -1,12 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-
-class RootsControllerTest extends TestCase
+class RootsControllerTest extends ApiTestCase
 {
-    use DatabaseTransactions;
 
     /** Testing GET routes **/
     public function testGetRoutes()
