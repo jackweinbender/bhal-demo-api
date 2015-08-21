@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Letter;
 use \Input;
 
-class LettersController extends Controller
+class LettersController extends Apiv1Controller
 {
     /**
      * Display a listing of the resource.

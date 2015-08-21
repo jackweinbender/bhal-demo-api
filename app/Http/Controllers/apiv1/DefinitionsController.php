@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Definition;
 
-class DefinitionsController extends Controller
+class DefinitionsController extends Apiv1Controller
 {
     /**
      * Display a listing of the resource.

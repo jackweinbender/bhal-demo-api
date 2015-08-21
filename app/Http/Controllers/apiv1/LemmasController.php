@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Lemma;
 
-class LemmasController extends Controller
+class LemmasController extends Apiv1Controller
 {
     /**
      * Display a listing of the resource.

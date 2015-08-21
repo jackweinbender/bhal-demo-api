@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Root;
 use \Input;
 
-class RootsController extends Controller
+class RootsController extends Apiv1Controller
 {
 
     /**
