@@ -13,6 +13,9 @@ class Letter extends JsonApiModelAbstract
       'created_at',
       'updated_at'
     );
+
+    protected $fillable = ['letter', 'name', 'transliteration', 'asciitranslit'];
+
     /**
      * Letter hasMany Roots
      * @return App\Root

@@ -8,7 +8,7 @@ use Jackweinbender\LaravelJsonapi\JsonApi;
 class Root extends JsonApiModelAbstract
 {
 
-    protected $fillable = ['root', 'rootSlug', 'homonymNumber', 'rootDisplay'];
+    protected $fillable = ['root', 'slug', 'homonym', 'display'];
 
     public function letter(){
 
@@ -19,10 +19,24 @@ class Root extends JsonApiModelAbstract
     public function attributes(){
       return array(
         'root' => (string) $this->root,
-        'root-slug' => (string) $this->rootSlug,
-        'homonym-number' => (integer) $this->homonymNumber,
-        'root-display' => (string) $this->rootDisplay,
+        'slug' => (string) $this->slug,
+        'homonym' => (integer) $this->homonym,
+        'display' => (string) $this->display,
       );
     }
+
+    public static function boot()
+        {
+            parent::boot();
+            // Do this on every save (create/update)
+            static::saving(function($root){
+              if($root->homonym != 0 && $root->display != ""){
+                $root->slug = $root->display . "-" . $root->homonym;
+              } else {
+                $root->slug = $root->display;
+              }
+            });
+
+        }
 
 }

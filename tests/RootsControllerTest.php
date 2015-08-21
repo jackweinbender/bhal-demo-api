@@ -21,6 +21,30 @@ class RootsControllerTest extends TestCase
     public function testPutRouteWithoutPayload()
     {
       $this->put('/api/v1/roots/1')
+        ->see('No Data Sent')
+        ->assertResponseStatus(400);
+    }
+    public function testPutRouteWithoutType()
+    {
+      $payload['data'] = 'wrong';
+
+      $this->put('/api/v1/roots/1', $payload)
+        ->see('No Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPutRouteWithWrongType()
+    {
+      $payload['data']['type'] = 'wrong';
+
+      $this->put('/api/v1/roots/1', $payload)
+        ->see('Wrong Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPutRouteWithouAttributes()
+    {
+      $payload['data']['type'] = 'roots';
+      $this->put('/api/v1/roots/1', $payload)
+        ->see('No Attributes sent')
         ->assertResponseStatus(400);
     }
     public function testPutRouteWithPayload()

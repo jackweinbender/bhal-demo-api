@@ -15,15 +15,15 @@ class CreateRootsTable extends Migration
         Schema::create('roots', function(Blueprint $table){
 
           $table->increments('id');
-          $table->string('root');
-          $table->string('rootSlug')
-            ->unique()
+          $table->string('root')
+            ->nullable();
+          $table->string('slug')
             ->nullable()
             ->default(NULL);
-          $table->integer('homonymNumber')
+          $table->integer('homonym')
             ->nullable()
             ->default(NULL);
-          $table->string('rootDisplay')
+          $table->string('display')
             ->nullable()
             ->default(NULL);
           $table->string('letter_name')

@@ -32,7 +32,7 @@ class RootsTableSeeder extends Seeder
             $new = new Root;
 
             // Assign properties
-            $new->root = $root;
+            $new->display = $root;
 
             // Save new App\Root to the DB
             //$new->save();

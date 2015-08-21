@@ -18,6 +18,8 @@ Route::get('/', function () {
 
 Route::get('api/v1/letters', 'LettersController@index');
 Route::get('api/v1/letters/{id}', 'LettersController@show');
+Route::put('api/v1/letters/{id}', 'LettersController@update');
+Route::patch('api/v1/letters/{id}', 'LettersController@update');
 
 Route::get('api/v1/roots', 'RootsController@index');
 Route::post('api/v1/roots', 'RootsController@store');

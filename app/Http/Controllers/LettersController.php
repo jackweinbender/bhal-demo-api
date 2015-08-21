@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Response;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Letter;
-use Jackweinbender\LaravelJsonapi\JsonApi;
+use \Input;
 
 class LettersController extends Controller
 {
@@ -21,9 +18,7 @@ class LettersController extends Controller
     {
       $letters = Letter::with('roots')->get();
 
-      $response = new JsonApi();
-
-      return $response->collection($letters)->send();
+      return $this->res->collection($letters)->send();
     }
 
     /**
@@ -36,9 +31,39 @@ class LettersController extends Controller
     {
       $letter = Letter::with(['roots'])->find($id);
 
-      $response = new JsonApi();
+      return $this->res->includes(['roots'])->item($letter)->send();
+    }
 
-      return $response->includes(['roots'])->item($letter)->send();
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(Request $request, $id)
+    {
+        if(!Input::has('data')){
+          return response('No Data Sent', 400);
+        }
+        if(!Input::has('data.type')){
+          return response('No Type Specified', 400);
+        }
+        if(Input::get('data.type') != 'letters'){
+          return response('Wrong Type Specified', 400);
+        }
+        if(!Input::has('data.attributes')){
+          return response('No Attributes sent', 400);
+        }
+
+        $attrs = Input::get('data.attributes');
+
+        $letter = Letter::find($id);
+          $letter->fill($attrs);
+        $letter->save();
+
+        return $this->res->item($letter)->send();
+
     }
 
 }
