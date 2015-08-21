@@ -15,21 +15,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(["prefix" => "api/v1"], function(){
 
-Route::get('api/v1/letters', 'LettersController@index');
-Route::get('api/v1/letters/{id}', 'LettersController@show');
-Route::put('api/v1/letters/{id}', 'LettersController@update');
-Route::patch('api/v1/letters/{id}', 'LettersController@update');
+  // Letters
+  Route::get('letters', 'LettersController@index');
+  Route::get('letters/{id}', 'LettersController@show');
+  Route::put('letters/{id}', 'LettersController@update');
+  Route::patch('letters/{id}', 'LettersController@update');
 
-Route::get('api/v1/roots', 'RootsController@index');
-Route::post('api/v1/roots', 'RootsController@store');
-Route::get('api/v1/roots/{id}', 'RootsController@show');
-Route::put('api/v1/roots/{id}', 'RootsController@update');
-Route::patch('api/v1/roots/{id}', 'RootsController@update');
-Route::delete('api/v1/roots/{id}', 'RootsController@destroy');
+  // Roots
+  Route::get('roots', 'RootsController@index');
+  Route::post('roots', 'RootsController@store');
+  Route::get('roots/{id}', 'RootsController@show');
+  Route::put('roots/{id}', 'RootsController@update');
+  Route::patch('roots/{id}', 'RootsController@update');
+  Route::delete('roots/{id}', 'RootsController@destroy');
 
-// Route::get('api/v1/lemmas', 'LemmasController@index');
-Route::get('api/v1/lemmas/{id}', 'LemmasController@show');
+  // Lemmas
+  // Route::get('lemmas', 'LemmasController@index');
+  Route::get('lemmas/{id}', 'LemmasController@show');
 
-// Route::get('api/v1/definitions', 'DefinitionsController@index');
-Route::get('api/v1/definitions/{id}', 'DefinitionsController@show');
+  // Definitions
+  // Route::get('definitions', 'DefinitionsController@index');
+  Route::get('definitions/{id}', 'DefinitionsController@show');
+});
