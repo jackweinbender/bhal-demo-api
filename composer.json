@@ -7,8 +7,6 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-        "zizaco/entrust": "dev-laravel-5",
-        "league/fractal": "^0.12.0",
         "barryvdh/laravel-cors": "0.7.x",
         "firebase/php-jwt": "^3.0"
     },

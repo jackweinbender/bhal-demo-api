@@ -136,19 +136,13 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        Barryvdh\Cors\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        /**
-         * Third party Providers
-         */
-        Zizaco\Entrust\EntrustServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*
