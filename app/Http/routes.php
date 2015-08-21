@@ -15,13 +15,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group([
+  "prefix" => "auth",
+  "namespace" => "Auth"], function(){
+
+  Route::post('login', 'AuthenticationController@loginWithCredentials');
+
+});
 
 /**
  * API Routes
  */
 Route::group([
   "prefix" => "api/v1",
-  "namespace" => 'Apiv1'], function(){
+  "namespace" => "Apiv1"], function(){
 
   // Letters
   Route::get('letters', 'LettersController@index');
