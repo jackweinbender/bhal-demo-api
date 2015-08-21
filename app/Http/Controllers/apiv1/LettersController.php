@@ -43,7 +43,7 @@ class LettersController extends Apiv1Controller
      */
     public function update(Request $request, $id)
     {
-        if(!Input::has('data')){
+        if(!Input::has('data') || Input::get('data') == []){
           return response('No Data Sent', 400);
         }
         if(!Input::has('data.type')){
