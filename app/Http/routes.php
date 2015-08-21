@@ -19,7 +19,7 @@ Route::get('/', function () {
 /**
  * API Routes
  */
-Route::group(["prefix" => "api/v1"], function(){
+Route::group(["prefix" => "api/v1", "namespace" => 'Apiv1'], function(){
 
   // Letters
   Route::get('letters', 'LettersController@index');
