@@ -10,7 +10,6 @@ class ApiTestCase extends TestCase
 {
 
   use DatabaseTransactions;
-  use DatabaseMigrations;
 
   protected $fake;
 
