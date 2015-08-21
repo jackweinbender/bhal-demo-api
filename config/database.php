@@ -51,9 +51,10 @@ return [
             'database' => storage_path('database.sqlite'),
             'prefix'   => '',
         ],
-        'sqlite-testing' => [
+        
+        'testing' => [
             'driver'   => 'sqlite',
-            'database' => storage_path('database-test.sqlite'),
+            'database' => ':memory:',
             'prefix'   => '',
         ],
 
