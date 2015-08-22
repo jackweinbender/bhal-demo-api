@@ -21,16 +21,16 @@ class CreateRootsTable extends Migration
             ->nullable()
             ->default(NULL);
           $table->integer('homonym')
+            ->unsigned()
             ->nullable()
             ->default(NULL);
           $table->string('display')
             ->nullable()
             ->default(NULL);
-          $table->string('letter_name')
-            ->nullable()
-            ->default(NULL);
 
           /* Relational bits */
+          $table->string('letter_name')
+            ->nullable();
           $table->foreign('letter_name')->references('name')->on('letters');
           // Timestamps
           $table->timestamps();

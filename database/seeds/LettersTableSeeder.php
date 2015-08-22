@@ -23,11 +23,13 @@ class LettersTableSeeder extends Seeder
 
         // Creates a record in teh Letters table for each
         // letter retrieved; typecast as an array for Eloquent
+        print_r("Writing ");
         foreach ($letters->letters as $letter) {
-
+          print_r(" . ");
           Letter::create((array) $letter);
 
         }
+        print_r("done\n");
 
 
 

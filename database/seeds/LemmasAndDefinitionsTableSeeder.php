@@ -35,12 +35,14 @@ class LemmasAndDefinitionsTableSeeder extends Seeder
         $new_definitions = [];
 
         // Build the Lemma object, save as $lemma
+        print_r("- LEMMA -\n");
         $lemma = $this->makeLemma($entry, $letter);
 
         // Build the Definition objects
         foreach ($entry->definitions as $definition) {
 
           // Make the new App\Definition; Returns new App\Definitnion
+          print_r(">");
           $def = $this->makeDefinition($definition, $lemma);
 
           // Add new $def to the $new_definitions Array
@@ -49,9 +51,13 @@ class LemmasAndDefinitionsTableSeeder extends Seeder
         }
         // Save the new App\Lemma to the associated App\Letter
         $letter->lemmas()->save($lemma);
-
+        print_r("\n- LEMMA SAVED -\n");
         // Bulk-assign the App\Definition Array to the associated App\Lemma
+
+        print_r("- BATCH SAVING DEFINITIONS ... ");
         $lemma->definitions()->saveMany($new_definitions);
+        print_r("DONE\n");
+
 
       }
 
@@ -65,6 +71,7 @@ class LemmasAndDefinitionsTableSeeder extends Seeder
      * @return App\Lemma a new Lemma object
      */
     protected function makeLemma(stdClass $entry, App\Letter $letter){
+
       $new = new Lemma;
 
       $new->word      = $entry->header->word;

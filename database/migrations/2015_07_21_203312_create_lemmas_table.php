@@ -17,13 +17,18 @@ class CreateLemmasTable extends Migration
            * Properties
            */
           $table->increments('id');
-          $table->integer('entry');
+          $table->integer('entry')
+            ->unsigned()
+            ->nullable();
           $table->string('word');
           $table->string('homonymNumber')
             ->nullable();
           $table->integer('strongs')
+            ->unsigned()
             ->nullable();
-          $table->integer('page');
+          $table->integer('page')
+            ->unsigned()
+            ->nullable();
           $table->string('language');
           $table->string('speech')
             ->nullable();
@@ -52,11 +57,10 @@ class CreateLemmasTable extends Migration
            * Relational bits
            */
           // App\Letter
-          $table->string('letter_name');
+          $table->string('letter_name')->nullable();
           $table->foreign('letter_name')->references('name')->on('letters');
           // App\Root
-          $table->integer('root_id')
-            ->nullable();
+          $table->integer('root_id')->unsigned()->nullable();
           $table->foreign('root_id')->references('id')->on('roots');
           /**
            * Timestamps

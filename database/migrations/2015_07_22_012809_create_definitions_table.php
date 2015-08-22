@@ -16,12 +16,12 @@ class CreateDefinitionsTable extends Migration
 
           $table->increments('id');
           $table->string('title');
-          $table->string('body');
+          $table->text('body');
           $table->string('content');
 
-          // Relational bints
-          $table->integer('lemma_id');
-          $table->foreign('lemma_id')->references('id')->on('lemma');
+          // Relational bits
+          $table->integer('lemma_id')->unsigned();
+          $table->foreign('lemma_id')->references('id')->on('lemmas');
           // Timestamps
           $table->timestamps();
 

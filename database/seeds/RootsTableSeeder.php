@@ -21,7 +21,6 @@ class RootsTableSeeder extends Seeder
 
           // Get the proper App\Letter for this relationship
           $letter = Letter::get()->where("name", $letter_key)->first();
-
           // Create a new array to store newly created roots
           $new_roots = [];
 
@@ -42,8 +41,9 @@ class RootsTableSeeder extends Seeder
           }
 
           // Save the new roots to the App\Letter
+          print_r("Batch Saving $letter->name ... ");
           $letter->roots()->saveMany($new_roots);
-
+          print_r("completed\n");
         }
     }
 }

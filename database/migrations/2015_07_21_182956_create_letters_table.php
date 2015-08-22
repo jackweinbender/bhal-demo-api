@@ -15,7 +15,8 @@ class CreateLettersTable extends Migration
         Schema::create('letters', function(Blueprint $table){
           $table->increments('id');
           $table->string('letter');
-          $table->string('name');
+          $table->string('name')
+            ->unique();
           $table->string('transliteration');
           $table->string('asciitranslit');
 
