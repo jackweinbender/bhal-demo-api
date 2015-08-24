@@ -35,7 +35,7 @@ class LemmasAndDefinitionsTableSeeder extends Seeder
         $new_definitions = [];
 
         // Build the Lemma object, save as $lemma
-        print_r("- LEMMA -\n");
+        print_r("- LEMMA -\n- ");
         $lemma = $this->makeLemma($entry, $letter);
 
         // Build the Definition objects
