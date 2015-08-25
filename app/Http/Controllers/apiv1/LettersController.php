@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Apiv1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Letter;
+use App\Root;
 use \Input;
 
 class LettersController extends Apiv1Controller
@@ -16,6 +17,7 @@ class LettersController extends Apiv1Controller
      */
     public function index()
     {
+      // Setup
       $letters = Letter::with('roots')->get();
 
       return $this->res->collection($letters)->send();
@@ -29,6 +31,7 @@ class LettersController extends Apiv1Controller
      */
     public function show($id)
     {
+      // Setup
       $letter = Letter::with(['roots'])->find($id);
 
       return $this->res->includes(['roots'])->item($letter)->send();
@@ -43,26 +46,61 @@ class LettersController extends Apiv1Controller
      */
     public function update(Request $request, $id)
     {
-        if(!Input::has('data') || Input::get('data') == []){
-          return response('No Data Sent', 400);
-        }
-        if(!Input::has('data.type')){
-          return response('No Type Specified', 400);
-        }
-        if(Input::get('data.type') != 'letters'){
-          return response('Wrong Type Specified', 400);
-        }
-        if(!Input::has('data.attributes')){
-          return response('No Attributes sent', 400);
-        }
+      // Validation
+      if(!Input::has('data') || Input::get('data') == []){
+        return response('No Data Sent', 400);
+      }
+      if(!Input::has('data.type')){
+        return response('No Type Specified', 400);
+      }
+      if(Input::get('data.type') != 'letters'){
+        return response('Wrong Type Specified', 400);
+      }
+      if(!Input::has('data.attributes')){
+        return response('No Attributes sent', 400);
+      }
 
-        $attrs = Input::get('data.attributes');
+      // Setup
+      $attrs = Input::get('data.attributes');
 
-        $letter = Letter::find($id);
-          $letter->fill($attrs);
-        $letter->save();
+      // UPDATE
+      $letter = Letter::find($id);
+        $letter->fill($attrs);
+      $letter->save();
 
-        return $this->res->item($letter)->send();
+      return $this->res->item($letter)->send();
+
+    }
+
+    /**
+     * Attaches records to a given ($id) Letter model. POST payload needs
+     * to include the 'id' and 'type' of the item to be attached to the Letter
+     *
+     * @param  Request $request
+     * @param  String  $id
+     * @return JSON of updated letter or bad response
+     */
+    public function attach(Request $request, $id){
+      // Validation
+      if(!Input::has('data') || Input::get('data') == []){
+        return response('No Data Sent', 400);
+      }
+      if(!Input::has('data.id') || !Input::has('data.type')){
+        return response('Post must include both "type" and "id."', 400);
+      }
+
+      // Setup
+      $data = Input::get('data');
+      $root = Root::find($data['id']);
+      $letter = Letter::find($id);
+
+      // The actual association
+      $root->letter()->associate($letter)->save();
+
+      // Need to refresh the model to include Roots
+      $letter = Letter::with(['roots'])->find($id);
+
+      return $this->res->item($letter)->send();
 
     }
 

@@ -35,6 +35,7 @@ Route::group([
   Route::get('letters/{id}', 'LettersController@show');
   Route::put('letters/{id}', 'LettersController@update');
   Route::patch('letters/{id}', 'LettersController@update');
+  Route::post('letters/{id}', 'LettersController@attach');
 
   // Roots
   Route::get('roots', 'RootsController@index');

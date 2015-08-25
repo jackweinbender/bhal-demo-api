@@ -1,6 +1,7 @@
 <?php
 
 use App\Letter;
+use App\Root;
 
 class LettersControllerTest extends ApiTestCase
 {
@@ -91,6 +92,54 @@ class LettersControllerTest extends ApiTestCase
       $this->patch('/api/v1/letters/1', $this->getPayload())
         ->seeJson()
         ->assertResponseOk();
+    }
+
+    public function testPostRouteAttachRootWithoutData(){
+      $this->makeLetter();
+      $this->post('api/v1/letters/1')
+        ->see('No Data Sent')
+        ->assertResponseStatus(400);
+    }
+
+    public function testPostRouteAttachRootWithIncompleteData(){
+      $this->makeLetter();
+      $root = Root::create(array(
+        "root" => $this->fake->word,
+        "slug" => $this->fake->word,
+        "display" => $this->fake->randomLetter,
+        "homonym" => $this->fake->randomNumber([0,1,2]),
+      ));
+
+      $this->post('api/v1/letters/1', [
+        "data" => ["id" => 1]
+        ])
+        ->see('Post must include both "type" and "id."')
+        ->assertResponseStatus(400);
+      $this->post('api/v1/letters/1', [
+        "data" => ["type" => "roots"]
+        ])
+        ->see('Post must include both "type" and "id."')
+        ->assertResponseStatus(400);
+    }
+
+    public function testPostRouteAttachRootWithData(){
+      $this->makeLetter();
+      $root = Root::create(array(
+        "root" => $this->fake->word,
+        "slug" => $this->fake->word,
+        "display" => $this->fake->randomLetter,
+        "homonym" => $this->fake->randomNumber([0,1,2]),
+      ));
+
+      $this->post('api/v1/letters/1', [
+        "data" => [
+          "id" => 1,
+          "type" => "root"
+          ]])
+        ->seeJson(array(
+            "type" => "roots"
+          )
+        );
     }
 
     /**
