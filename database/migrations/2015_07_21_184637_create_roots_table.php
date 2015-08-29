@@ -17,14 +17,21 @@ class CreateRootsTable extends Migration
           $table->increments('id');
           $table->string('root')
             ->nullable();
-          $table->string('slug')
+          $table->string('root_slug')
             ->nullable()
+            ->unique()
             ->default(NULL);
-          $table->integer('homonym')
+          $table->integer('homonym_number')
             ->unsigned()
             ->nullable()
             ->default(NULL);
           $table->string('display')
+            ->nullable()
+            ->default(NULL);
+          $table->string('basic_definition')
+            ->nullable()
+            ->default(NULL);
+          $table->string('historical_root')
             ->nullable()
             ->default(NULL);
 
