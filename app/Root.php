@@ -25,7 +25,7 @@ class Root extends JsonApiModelAbstract
         'root_slug' => (string) $this->root_slug,
         'homonym_number' => (integer) $this->homonym_number,
         'display' => (string) $this->display,
-        'basic_definition' => (string) $this->basic_def
+        'basic_definition' => (string) $this->basic_definition
       );
     }
 
