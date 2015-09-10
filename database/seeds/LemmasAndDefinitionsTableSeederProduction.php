@@ -5,7 +5,7 @@ use App\Letter;
 use App\Lemma;
 use App\Definition;
 
-class LemmasAndDefinitionsTableSeeder extends Seeder
+class LemmasAndDefinitionsTableSeederProduction extends Seeder
 {
     /**
      * Run the database seeds.

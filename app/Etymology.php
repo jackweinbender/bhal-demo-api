@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Etymology extends Model
 {
 
-  protected $fillable = ['root_id'];
+  //protected $fillable = [''];
 
   public function root(){
 

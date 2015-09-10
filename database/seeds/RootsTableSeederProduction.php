@@ -5,7 +5,7 @@ use App\Root;
 use App\Letter;
 use App\Etymology;
 
-class RootsTableSeeder extends Seeder
+class RootsTableSeederProduction extends Seeder
 {
     /**
      * Run the database seeds.

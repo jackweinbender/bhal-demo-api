@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class DatabaseSeeder extends Seeder
+class ProductionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call( 'LettersTableSeederProduction' );
         $this->call( 'RootsTableSeederProduction' );
-        //$this->call( 'LemmasAndDefinitionsTableSeeder' );
+        $this->call( 'LemmasAndDefinitionsTableSeederProduction' );
 
         Model::reguard();
     }

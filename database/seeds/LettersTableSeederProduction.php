@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Letter;
 
-class LettersTableSeeder extends Seeder
+class LettersTableSeederProduction extends Seeder
 {
     /**
      * Seeds the 'Letters' table with the current API data from Heroku
