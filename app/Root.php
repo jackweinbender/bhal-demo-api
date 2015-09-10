@@ -9,7 +9,7 @@ class Root extends JsonApiModelAbstract
 {
 
     protected $fillable = ['root', 'root_slug', 'homonym_number', 'display', 'basic_definition', 'historical_root'];
-    //protected $primaryKey = 'root_slug';
+    protected $primaryKey = 'root_slug';
 
 
     public function letter(){
@@ -20,7 +20,7 @@ class Root extends JsonApiModelAbstract
 
     public function etymology(){
 
-      return $this->hasOne('App\Etymology', 'root_id');
+      return $this->hasOne('App\Etymology', 'root_id', 'id');
 
     }
 

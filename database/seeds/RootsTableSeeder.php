@@ -33,10 +33,6 @@ class RootsTableSeeder extends Seeder
             // Assign properties
             $new->display = $root;
 
-            $new->save();
-
-            $new->etymology()->create(["discussion"=>"Testing"]);
-
             // Add the new App\Root to the $new_root Array
             $new_roots[] = $new;
           }
