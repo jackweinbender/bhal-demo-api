@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Root;
 use App\Letter;
+use App\Etymology;
 
 class RootsTableSeeder extends Seeder
 {
@@ -29,12 +30,12 @@ class RootsTableSeeder extends Seeder
 
             // Instantiate a new Root
             $new = new Root;
-
             // Assign properties
             $new->display = $root;
 
-            // Save new App\Root to the DB
-            //$new->save();
+            $new->save();
+
+            $new->etymology()->create(["discussion"=>"Testing"]);
 
             // Add the new App\Root to the $new_root Array
             $new_roots[] = $new;
