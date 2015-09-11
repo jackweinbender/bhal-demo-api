@@ -17,7 +17,7 @@ abstract class JsonApiModelAbstract extends Model implements JsonApiModelInterfa
    * @var String
    */
   protected $modelType;
-
+  protected $modelId;
   /**
    * Returns attribute array from parent getAttribute function
    * Child class should override to include cast properties
@@ -37,12 +37,23 @@ abstract class JsonApiModelAbstract extends Model implements JsonApiModelInterfa
    */
   public function resourceObject(){
     return array(
-      'id' => $this->getKey(),
+      'id' => $this->getModelId(),
       'type' => $this->getModelType(),
       'attributes' => $this->attributes(),
     );
   }
 
+
+  public function getModelId(){
+
+    if(isset($this->modelId)){
+      $id = $this->modelId;
+      return $this->$id;
+    }
+
+    return $this->id;
+
+  }
   /**
    * Returns the a reference ID object for the model
    *
@@ -51,7 +62,7 @@ abstract class JsonApiModelAbstract extends Model implements JsonApiModelInterfa
   public function rid(){
     return array(
       'type' => $this->getModelType(),
-      'id' => $this->getKey(),
+      'id' => $this->getModelId(),
     );
   }
 
@@ -74,7 +85,7 @@ abstract class JsonApiModelAbstract extends Model implements JsonApiModelInterfa
    * @return String
    */
   public function getUniqueKey(){
-    return $this->getmodelType() . $this->getKey();
+    return $this->getmodelType() . $this->getModelId();
   }
 
   /**

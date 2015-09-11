@@ -32,9 +32,9 @@ class LettersController extends Apiv1Controller
     public function show($id)
     {
       if(is_numeric($id)){
-        $letter = Letter::with(['roots'])->where('id', $id)->firstOrFail();
-      } else {
         $letter = Letter::with(['roots'])->findOrFail($id);
+      } else {
+        $letter = Letter::with(['roots'])->where('transliteration', $id)->firstOrFail();
       }
 
       return $this->res->includes(['roots'])->item($letter)->send();

@@ -62,12 +62,12 @@ class RootsController extends Apiv1Controller
     public function show($id)
     {
         if(is_numeric($id)){
-          $root = Root::where('id', $id)->firstOrFail();
+          $root = Root::with('etymology')->findOrFail($id);
         } else {
-          $root = Root::findOrFail($id);
+          $root = Root::with('etymology')->where('root_slug', $id)->firstOrFail();
         }
 
-        return $this->res->item($root)->send();
+        return $this->res->includes(['etymology'])->item($root)->send();
     }
 
     /**
@@ -120,7 +120,7 @@ class RootsController extends Apiv1Controller
         } else {
           $root = Root::find($id);
         }
-        
+
         if($root){
           $root->delete();
           return response(['message'=>"Successfully deleted root with id $id"], 200);

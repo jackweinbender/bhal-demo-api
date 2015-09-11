@@ -104,18 +104,33 @@ class JsonApi
       // Loop through relationships array
       foreach ($model->getRelations() as $relation => $related) {
 
-        // If the key has no value (no related records returned), break;
-        if($related->isEmpty()){ break; }
+        // Checks if relationship is a collection by determining if the
+        // method 'isEmpty' exists on the object
+        if(method_exists($related, 'isEmpty')){
+          // If the key has no value (no related records returned), break;
+          if($related->isEmpty()){ break; }
 
-        // If the key is in the includes collection, merge the them
-        if(in_array($relation, $this->includes)){
-          $this->includedObjects = $this->includedObjects->merge($related);
+          // If the key is in the includes collection, merge the them
+          if(in_array($relation, $this->includes)){
+            $this->includedObjects = $this->includedObjects->merge($related);
+          }
+
+          // And set the relationship key and value
+          $relationships[$relation]['data'] = $related->map(function($item){
+            return $item->rid();
+          });
+        } else {
+          if($related == NULL){ break; }
+
+          // If the key is in the includes collection, merge the them
+          if(in_array($relation, $this->includes)){
+            $this->includedObjects = $this->includedObjects->push($related);
+          }
+
+          // And set the relationship key and value
+          $relationships[$relation]['data'] = $related->rid();
+
         }
-
-        // Otherwise set the relationship key and value
-        $relationships[$relation]['data'] = $related->map(function($item){
-          return $item->rid();
-        });
 
       }
 

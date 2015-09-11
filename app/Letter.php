@@ -15,14 +15,15 @@ class Letter extends JsonApiModelAbstract
     );
 
     protected $fillable = ['letter', 'name', 'transliteration', 'asciitranslit'];
-    protected $primaryKey = 'transliteration';
+    protected $modelId = 'transliteration';
+
     /**
      * Letter hasMany Roots
      * @return App\Root
      */
     public function roots(){
 
-      return $this->hasMany('App\Root', 'letter_name', 'name');
+      return $this->hasMany('App\Root', 'letter_id', 'id');
 
     }
 

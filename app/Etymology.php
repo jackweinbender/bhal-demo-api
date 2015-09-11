@@ -2,17 +2,25 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Jackweinbender\LaravelJsonapi\JsonApiModelAbstract;
+use Jackweinbender\LaravelJsonapi\JsonApi;
 
-class Etymology extends Model
+class Etymology extends JsonApiModelAbstract
 {
 
-  //protected $fillable = [''];
+  protected $fillable = ['discussion', 'literature'];
 
   public function root(){
 
     return $this->belongsTo('App\Root');
 
+  }
+
+  public function attributes(){
+    return array(
+      'discussion' => (string) $this->discussion,
+      'literature' => (string) $this->literature,
+    );
   }
 
 }

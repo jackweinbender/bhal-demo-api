@@ -45,6 +45,14 @@ Route::group([
   Route::patch('roots/{id}', 'RootsController@update');
   Route::delete('roots/{id}', 'RootsController@destroy');
 
+  // Etymologies
+  Route::get('etymologies', 'EtymologiesController@index');
+  Route::post('etymologies', 'EtymologiesController@store');
+  Route::get('etymologies/{id}', 'EtymologiesController@show');
+  // Route::put('etymologies/{id}', 'EtymologiesController@update');
+  // Route::patch('etymologies/{id}', 'EtymologiesController@update');
+  // Route::delete('etymologies/{id}', 'EtymologiesController@destroy');
+
   // Lemmas
   // Route::get('lemmas', 'LemmasController@index');
   Route::get('lemmas/{id}', 'LemmasController@show');
@@ -52,4 +60,5 @@ Route::group([
   // Definitions
   // Route::get('definitions', 'DefinitionsController@index');
   Route::get('definitions/{id}', 'DefinitionsController@show');
+
 });

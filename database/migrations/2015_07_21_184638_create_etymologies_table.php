@@ -19,6 +19,9 @@ class CreateEtymologiesTable extends Migration
           $table->text('discussion')
             ->nullable()
             ->default(NULL);
+          $table->text('literature')
+            ->nullable()
+            ->default(NULL);
 
           /* Relational bits */
           $table->integer('root_id')->unsigned();
