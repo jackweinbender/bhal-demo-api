@@ -101,47 +101,6 @@ class LettersControllerTest extends ApiTestCase
         ->assertResponseStatus(400);
     }
 
-    // public function testPostRouteAttachRootWithIncompleteData(){
-    //   $this->makeLetter();
-    //   $root = Root::create(array(
-    //     "root" => $this->fake->word,
-    //     "slug" => $this->fake->word,
-    //     "display" => $this->fake->randomLetter,
-    //     "homonym" => $this->fake->randomNumber([0,1,2]),
-    //   ));
-    //
-    //   $this->post('api/v1/letters/a', [
-    //     "data" => ["id" => 1]
-    //     ])
-    //     ->see('Post must include both "type" and "id."')
-    //     ->assertResponseStatus(400);
-    //   $this->post('api/v1/letters/1', [
-    //     "data" => ["type" => "roots"]
-    //     ])
-    //     ->see('Post must include both "type" and "id."')
-    //     ->assertResponseStatus(400);
-    // }
-    //
-    // public function testPostRouteAttachRootWithData(){
-    //   $this->makeLetter();
-    //   $root = Root::create(array(
-    //     "root" => $this->fake->word,
-    //     "slug" => $this->fake->word,
-    //     "display" => $this->fake->randomLetter,
-    //     "homonym" => $this->fake->randomNumber([0,1,2]),
-    //   ));
-    //
-    //   $this->post('api/v1/letters/a', [
-    //     "data" => [
-    //       "id" => 1,
-    //       "type" => "root"
-    //       ]])
-    //     ->seeJson(array(
-    //         "type" => "roots"
-    //       )
-    //     );
-    // }
-
     /**
      * Pirate functions
      */

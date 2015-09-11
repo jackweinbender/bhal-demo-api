@@ -80,46 +80,4 @@ class LettersController extends Apiv1Controller
 
     }
 
-    /**
-     * Attaches records to a given ($id) Letter model. POST payload needs
-     * to include the 'id' and 'type' of the item to be attached to the Letter
-     *
-     * @param  Request $request
-     * @param  String  $id
-     * @return JSON of updated letter or bad response
-     */
-    public function attach(Request $request, $id){
-      // Validation
-      if(!Input::has('data') || Input::get('data') == []){
-        return response('No Data Sent', 400);
-      }
-      if(!Input::has('data.id') || !Input::has('data.type')){
-        return response('Post must include both "type" and "id."', 400);
-      }
-
-      // Setup
-      $data = Input::get('data');
-
-      if(is_numeric($data['id'])){
-        $root = Root::where('id', $data['id'])->firstOrFail();
-      } else {
-        $root = Root::findOrFail($data['id']);
-      }
-
-      if(is_numeric($id)){
-        $letter = Letter::where('id', $id)->firstOrFail();
-      } else {
-        $letter = Letter::findOrFail($id);
-      }
-
-      // The actual association
-      $root->letter()->associate($letter)->save();
-
-      // Need to refresh the model to include Roots
-      $letter = Letter::with(['roots'])->find($id);
-
-      return $this->res->item($letter)->send();
-
-    }
-
 }
