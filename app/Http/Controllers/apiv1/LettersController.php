@@ -68,9 +68,9 @@ class LettersController extends Apiv1Controller
 
       // UPDATE
       if(is_numeric($id)){
-        $letter = Letter::where('id', $id)->firstOrFail();
-      } else {
         $letter = Letter::findOrFail($id);
+      } else {
+        $letter = Letter::where('transliteration', $id)->firstOrFail();
       }
 
       $letter->fill($attrs);

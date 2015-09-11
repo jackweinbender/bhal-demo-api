@@ -13,7 +13,7 @@ class LettersControllerTest extends ApiTestCase
       $this->get('/api/v1/letters')
           ->seeJson()
           ->assertResponseOk();
-      $this->get('/api/v1/letters/abcd')
+      $this->get('/api/v1/letters/a')
           ->seeJson()
           ->assertResponseOk();
     }
@@ -25,7 +25,7 @@ class LettersControllerTest extends ApiTestCase
     {
       $this->makeLetter();
 
-      $this->patch('/api/v1/letters/abcd')
+      $this->put('/api/v1/letters/a')
         ->see('No Data Sent')
         ->assertResponseStatus(400);
     }
@@ -33,7 +33,7 @@ class LettersControllerTest extends ApiTestCase
     {
       $this->makeLetter();
 
-      $this->patch('/api/v1/letters/abcd', [])
+      $this->put('/api/v1/letters/a', [])
         ->see('No Data Sent')
         ->assertResponseStatus(400);
     }
@@ -44,7 +44,7 @@ class LettersControllerTest extends ApiTestCase
       $payload = $this->getPayload();
       $payload['data'] = 'wrong';
 
-      $this->patch('/api/v1/letters/abcd', $payload)
+      $this->put('/api/v1/letters/a', $payload)
         ->see('No Type Specified')
         ->assertResponseStatus(400);
     }
@@ -55,7 +55,7 @@ class LettersControllerTest extends ApiTestCase
       $payload = $this->getPayload();
       $payload['data']['type'] = 'wrong';
 
-      $this->patch('/api/v1/letters/abcd', $payload)
+      $this->put('/api/v1/letters/a', $payload)
         ->see('Wrong Type Specified')
         ->assertResponseStatus(400);
     }
@@ -66,7 +66,7 @@ class LettersControllerTest extends ApiTestCase
       $payload = $this->getPayload();
       unset($payload['data']['attributes']);
 
-      $this->patch('/api/v1/letters/abcd', $payload)
+      $this->put('/api/v1/letters/a', $payload)
         ->see('No Attributes sent')
         ->assertResponseStatus(400);
     }
@@ -74,7 +74,7 @@ class LettersControllerTest extends ApiTestCase
     {
       $this->makeLetter();
 
-      $this->patch('/api/v1/letters/abcd', $this->getPayload())
+      $this->put('/api/v1/letters/a', $this->getPayload())
         ->seeJson()
         ->assertResponseOk();
     }
@@ -83,64 +83,64 @@ class LettersControllerTest extends ApiTestCase
      * Both PATCH and PUT refere to the same Controller
      * function, so I've only included the one test for the
      * PATCH route (to make sure the Route is configured properly).
-     * Otherwise, the PUT fucntionality of sully tested above.
+     * Otherwise, the PUT fucntionality os fully tested above.
      */
     public function testPatchRouteWithPayload()
     {
       $this->makeLetter();
 
-      $this->patch('/api/v1/letters/abcd', $this->getPayload())
+      $this->patch('/api/v1/letters/a', $this->getPayload())
         ->seeJson()
         ->assertResponseOk();
     }
 
     public function testPostRouteAttachRootWithoutData(){
       $this->makeLetter();
-      $this->post('api/v1/letters/abcd')
+      $this->post('api/v1/letters/a')
         ->see('No Data Sent')
         ->assertResponseStatus(400);
     }
 
-    public function testPostRouteAttachRootWithIncompleteData(){
-      $this->makeLetter();
-      $root = Root::create(array(
-        "root" => $this->fake->word,
-        "slug" => $this->fake->word,
-        "display" => $this->fake->randomLetter,
-        "homonym" => $this->fake->randomNumber([0,1,2]),
-      ));
-
-      $this->post('api/v1/letters/abcd', [
-        "data" => ["id" => 1]
-        ])
-        ->see('Post must include both "type" and "id."')
-        ->assertResponseStatus(400);
-      $this->post('api/v1/letters/1', [
-        "data" => ["type" => "roots"]
-        ])
-        ->see('Post must include both "type" and "id."')
-        ->assertResponseStatus(400);
-    }
-
-    public function testPostRouteAttachRootWithData(){
-      $this->makeLetter();
-      $root = Root::create(array(
-        "root" => $this->fake->word,
-        "slug" => $this->fake->word,
-        "display" => $this->fake->randomLetter,
-        "homonym" => $this->fake->randomNumber([0,1,2]),
-      ));
-
-      $this->post('api/v1/letters/abcd', [
-        "data" => [
-          "id" => 1,
-          "type" => "root"
-          ]])
-        ->seeJson(array(
-            "type" => "roots"
-          )
-        );
-    }
+    // public function testPostRouteAttachRootWithIncompleteData(){
+    //   $this->makeLetter();
+    //   $root = Root::create(array(
+    //     "root" => $this->fake->word,
+    //     "slug" => $this->fake->word,
+    //     "display" => $this->fake->randomLetter,
+    //     "homonym" => $this->fake->randomNumber([0,1,2]),
+    //   ));
+    //
+    //   $this->post('api/v1/letters/a', [
+    //     "data" => ["id" => 1]
+    //     ])
+    //     ->see('Post must include both "type" and "id."')
+    //     ->assertResponseStatus(400);
+    //   $this->post('api/v1/letters/1', [
+    //     "data" => ["type" => "roots"]
+    //     ])
+    //     ->see('Post must include both "type" and "id."')
+    //     ->assertResponseStatus(400);
+    // }
+    //
+    // public function testPostRouteAttachRootWithData(){
+    //   $this->makeLetter();
+    //   $root = Root::create(array(
+    //     "root" => $this->fake->word,
+    //     "slug" => $this->fake->word,
+    //     "display" => $this->fake->randomLetter,
+    //     "homonym" => $this->fake->randomNumber([0,1,2]),
+    //   ));
+    //
+    //   $this->post('api/v1/letters/a', [
+    //     "data" => [
+    //       "id" => 1,
+    //       "type" => "root"
+    //       ]])
+    //     ->seeJson(array(
+    //         "type" => "roots"
+    //       )
+    //     );
+    // }
 
     /**
      * Pirate functions
@@ -169,7 +169,7 @@ class LettersControllerTest extends ApiTestCase
         "name" => $this->fake->word,
         "asciitranslit" => $this->fake->word,
         "letter" => $this->fake->randomLetter,
-        "transliteration" => 'abcd',
+        "transliteration" => 'a',
       );
     }
 

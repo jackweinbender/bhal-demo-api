@@ -74,9 +74,9 @@ class EtymologiesController extends Apiv1Controller
       $etymology->fill(Input::get('data.attributes'));
 
       $root->etymology()->save($etymology);
-      $etymology->root;
+      $root->etymology;
       
-      return $this->res->item($etymology)->send();
+      return $this->res->includes(['etymology'])->item($root)->send();
     }
 
     /**
