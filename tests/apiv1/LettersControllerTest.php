@@ -94,13 +94,6 @@ class LettersControllerTest extends ApiTestCase
         ->assertResponseOk();
     }
 
-    public function testPostRouteAttachRootWithoutData(){
-      $this->makeLetter();
-      $this->post('api/v1/letters/a')
-        ->see('No Data Sent')
-        ->assertResponseStatus(400);
-    }
-
     /**
      * Pirate functions
      */
