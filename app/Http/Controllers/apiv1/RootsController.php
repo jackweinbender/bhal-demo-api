@@ -88,8 +88,13 @@ class RootsController extends Apiv1Controller
 
         $attrs = Input::get('data.attributes');
 
-        $root = Root::find($id);
-          $root->fill($attrs);
+        if(is_int($id)){
+          $root = Root::firstOrFail($id);
+        } else {
+          $root = Root::where('id', $id)->firstOrFail();
+        }
+
+        $root->fill($attrs);
         $root->save();
 
         return $this->res->item($root)->send();

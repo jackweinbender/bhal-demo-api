@@ -31,8 +31,11 @@ class LettersController extends Apiv1Controller
      */
     public function show($id)
     {
-      // Setup
-      $letter = Letter::with(['roots'])->find($id);
+      if(is_numeric($id)){
+        $letter = Letter::with(['roots'])->where('id', $id)->firstOrFail();
+      } else {
+        $letter = Letter::with(['roots'])->findOrFail($id);
+      }
 
       return $this->res->includes(['roots'])->item($letter)->send();
     }
@@ -64,8 +67,13 @@ class LettersController extends Apiv1Controller
       $attrs = Input::get('data.attributes');
 
       // UPDATE
-      $letter = Letter::find($id);
-        $letter->fill($attrs);
+      if(is_numeric($id)){
+        $letter = Letter::where('id', $id)->firstOrFail();
+      } else {
+        $letter = Letter::findOrFail($id);
+      }
+
+      $letter->fill($attrs);
       $letter->save();
 
       return $this->res->item($letter)->send();
