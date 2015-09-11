@@ -99,8 +99,18 @@ class LettersController extends Apiv1Controller
 
       // Setup
       $data = Input::get('data');
-      $root = Root::find($data['id']);
-      $letter = Letter::find($id);
+
+      if(is_numeric($data['id'])){
+        $root = Root::where('id', $data['id'])->firstOrFail();
+      } else {
+        $root = Root::findOrFail($data['id']);
+      }
+
+      if(is_numeric($id)){
+        $letter = Letter::where('id', $id)->firstOrFail();
+      } else {
+        $letter = Letter::findOrFail($id);
+      }
 
       // The actual association
       $root->letter()->associate($letter)->save();

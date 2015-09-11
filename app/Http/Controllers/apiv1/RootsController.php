@@ -61,7 +61,13 @@ class RootsController extends Apiv1Controller
      */
     public function show($id)
     {
-        return $this->res->item(Root::find($id))->send();
+        if(is_numeric($id)){
+          $root = Root::where('id', $id)->firstOrFail();
+        } else {
+          $root = Root::findOrFail($id);
+        }
+
+        return $this->res->item($root)->send();
     }
 
     /**
@@ -88,10 +94,10 @@ class RootsController extends Apiv1Controller
 
         $attrs = Input::get('data.attributes');
 
-        if(is_int($id)){
-          $root = Root::firstOrFail($id);
-        } else {
+        if(is_numeric($id)){
           $root = Root::where('id', $id)->firstOrFail();
+        } else {
+          $root = Root::firstOrFail($id);
         }
 
         $root->fill($attrs);
@@ -109,7 +115,12 @@ class RootsController extends Apiv1Controller
      */
     public function destroy($id)
     {
-        $root = Root::find($id);
+        if(is_numeric($id)){
+          $root = Root::where('id', $id)->first();
+        } else {
+          $root = Root::find($id);
+        }
+        
         if($root){
           $root->delete();
           return response(['message'=>"Successfully deleted root with id $id"], 200);
