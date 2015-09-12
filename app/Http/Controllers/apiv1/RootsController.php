@@ -95,9 +95,9 @@ class RootsController extends Apiv1Controller
         $attrs = Input::get('data.attributes');
 
         if(is_numeric($id)){
-          $root = Root::where('id', $id)->firstOrFail();
+          $root = Root::findOrFail($id);
         } else {
-          $root = Root::firstOrFail($id);
+          $root = Root::where('root_slug', $id)->firstOrFail();
         }
 
         $root->fill($attrs);

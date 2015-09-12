@@ -51,7 +51,7 @@ Route::group([
   Route::get('etymologies/{id}', 'EtymologiesController@show');
   Route::put('etymologies/{id}', 'EtymologiesController@update');
   Route::patch('etymologies/{id}', 'EtymologiesController@update');
-  // Route::delete('etymologies/{id}', 'EtymologiesController@destroy');
+  Route::delete('etymologies/{id}', 'EtymologiesController@destroy');
 
   // Lemmas
   // Route::get('lemmas', 'LemmasController@index');

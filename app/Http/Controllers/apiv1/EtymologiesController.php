@@ -32,16 +32,6 @@ class EtymologiesController extends Apiv1Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
@@ -97,17 +87,6 @@ class EtymologiesController extends Apiv1Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  Request  $request
@@ -147,14 +126,21 @@ class EtymologiesController extends Apiv1Controller
 
      }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+     /**
+      * Remove the specified resource from storage.
+      *
+      * @param  int  $id
+      * @return Response
+      */
+     public function destroy($id)
+     {
+         $etymology = Etymology::find($id);
+
+         if($etymology){
+           $etymology->delete();
+           return response(['message'=>"Successfully deleted root with id $id"], 200);
+         }
+
+         return response(['message'=>"Unable to delete Etymology with id $id"], 400);
+     }
 }
