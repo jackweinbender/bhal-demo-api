@@ -8,7 +8,7 @@ use Jackweinbender\LaravelJsonapi\JsonApi;
 class Root extends JsonApiModelAbstract
 {
 
-    protected $fillable = ['root', 'root_slug', 'homonym_number', 'display', 'basic_definition', 'historical_root'];
+    protected $fillable = ['root', 'homonym_number', 'display', 'basic_definition', 'historical_root'];
     protected $modelId = 'root_slug';
 
 

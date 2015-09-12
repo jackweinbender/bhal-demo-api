@@ -15,8 +15,17 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call( 'LettersTableSeederProduction' );
-        $this->call( 'RootsTableSeederProduction' );
-        //$this->call( 'LemmasAndDefinitionsTableSeeder' );
+
+        $letters = App\Letter::get();
+
+        $letters->each(function($letter){
+          $roots = factory(App\Root::class, 10)->make();
+          $letter->roots()->saveMany($roots);
+        });
+
+
+
+
 
         Model::reguard();
     }
