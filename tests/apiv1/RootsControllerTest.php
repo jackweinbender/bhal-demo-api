@@ -8,12 +8,12 @@ class RootsControllerTest extends ApiTestCase
     /** Testing GET routes **/
     public function testGetRoutesOK()
     {
-      $this->makeRoot();
+      $root = factory(Root::class)->create();
 
       $this->get('/api/v1/roots')
           ->seeJson()
           ->assertResponseOK();
-      $this->get('/api/v1/roots/1')
+      $this->get('/api/v1/roots/' . $root->id)
           ->seeJson()
           ->assertResponseOK();
     }
@@ -21,95 +21,63 @@ class RootsControllerTest extends ApiTestCase
     /** Testing PUT routes **/
     public function testPutRouteWithoutPayload()
     {
-      $this->makeRoot();
+      $root = factory(Root::class)->create();
 
-      $this->put('/api/v1/roots/1')
+      $this->put('/api/v1/roots/' . $root->id)
         ->see('No Data Sent')
         ->assertResponseStatus(400);
     }
     public function testPutRouteWithoutType()
     {
-      $this->makeRoot();
+      $root = factory(Root::class)->create();
       $payload['data'] = 'wrong';
 
-      $this->put('/api/v1/roots/1', $payload)
+      $this->put('/api/v1/roots/' . $root->id, $payload)
         ->see('No Type Specified')
         ->assertResponseStatus(400);
     }
     public function testPutRouteWithWrongType()
     {
-      $this->makeRoot();
-      $payload = $this->getPayload();
+      $root = factory(Root::class)->create();
+
+      $payload['data'] = $root->resourceObject();
       $payload['data']['type'] = 'wrong';
 
-      $this->put('/api/v1/roots/1', $payload)
+      $this->put('/api/v1/roots/' . $root->id, $payload)
         ->see('Wrong Type Specified')
         ->assertResponseStatus(400);
     }
     public function testPutRouteWithouAttributes()
     {
-      $this->makeRoot();
-      $payload = $this->getPayload();
+      $root = factory(Root::class)->create();
+
+      $payload['data'] = $root->resourceObject();
       unset($payload['data']['attributes']);
 
-      $this->put('/api/v1/roots/1', $payload)
+      $this->put('/api/v1/roots/' . $root->id, $payload)
         ->see('No Attributes sent')
         ->assertResponseStatus(400);
     }
     public function testPutRouteWithPayload()
     {
-      $this->makeRoot();
-      $payload = $this->getPayload();
+      $root = factory(Root::class)->create();
 
-      $this->put('/api/v1/roots/1', $payload)
+      $payload['data'] = $root->resourceObject();
+
+      $this->put('/api/v1/roots/' . $root->id, $payload)
         ->seeJson()
         ->assertResponseOK();
     }
 
     /** Testing PATCH routes **/
-    public function testPatchRouteWithoutPayload()
-    {
-      $this->makeRoot();
 
-      $this->patch('/api/v1/roots/1')
-        ->see('No Data Sent')
-        ->assertResponseStatus(400);
-    }
-    public function testPatchRouteWithoutType()
-    {
-      $this->makeRoot();
-      $payload['data'] = 'wrong';
-
-      $this->patch('/api/v1/roots/1', $payload)
-        ->see('No Type Specified')
-        ->assertResponseStatus(400);
-    }
-    public function testPatchRouteWithWrongType()
-    {
-      $this->makeRoot();
-      $payload = $this->getPayload();
-      $payload['data']['type'] = 'wrong';
-
-      $this->patch('/api/v1/roots/1', $payload)
-        ->see('Wrong Type Specified')
-        ->assertResponseStatus(400);
-    }
-    public function testPatchRouteWithouAttributes()
-    {
-      $this->makeRoot();
-      $payload = $this->getPayload();
-      unset($payload['data']['attributes']);
-
-      $this->patch('/api/v1/roots/1', $payload)
-        ->see('No Attributes sent')
-        ->assertResponseStatus(400);
-    }
     public function testPatchRouteWithPayload()
     {
-      $this->makeRoot();
-      $payload = $this->getPayload();
+      $root = factory(Root::class)->create();
 
-      $this->patch('/api/v1/roots/1', $payload)
+      $payload['data'] = $root->resourceObject();
+
+      $this->patch('/api/v1/roots/' . $root->id, $payload)
         ->seeJson()
         ->assertResponseOK();
     }
@@ -122,7 +90,9 @@ class RootsControllerTest extends ApiTestCase
     }
     public function testPostRouteWithPayload()
     {
-      $payload = $this->getPayload();
+      $root = factory(Root::class)->make();
+
+      $payload['data'] = $root->resourceObject();
 
       $this->post('/api/v1/roots', $payload)
         ->seeJson()
@@ -131,10 +101,10 @@ class RootsControllerTest extends ApiTestCase
     /** Test DELETE route **/
     public function testDeleteRoute()
     {
-      $this->makeRoot();
+      $root = factory(Root::class)->create();
 
-      $this->delete('/api/v1/roots/1')
-        ->seeJson(['message'=>"Successfully deleted root with id 1"])
+      $this->delete('/api/v1/roots/' . $root->id)
+        ->seeJson(['message'=>"Successfully deleted root with id " . $root->id])
         ->assertResponseOK();
     }
     public function testDeleteRouteWithBadId()
@@ -144,46 +114,4 @@ class RootsControllerTest extends ApiTestCase
         ->assertResponseStatus(400);
     }
 
-    /**
-     * Pirate functions
-     */
-
-    /**
-     * Adds a given number of Roots to the DB.
-     *
-     * @param  integer $i Number of Roots to be added, defaults to One
-     * @return
-     */
-    protected function makeRoot($i = 1){
-      while ($i > 0) {
-        $attrs = $this->getAttributes();
-        Root::create($attrs);
-        $i--;
-      }
-    }
-
-    /**
-     * Provides the class attributes via Faker
-     * @return Array of attributes
-     */
-    protected function getAttributes(){
-      return array(
-        "root" => $this->fake->word,
-        "slug" => $this->fake->word,
-        "display" => $this->fake->randomLetter,
-        "homonym" => $this->fake->randomNumber([0,1,2]),
-      );
-    }
-    /**
-     * Mocks a full payload object for Root
-     * @return Array formatted for JSONAPI
-     */
-    protected function getPayload(){
-      return array(
-        "data" => array(
-          "type" => "roots",
-          "attributes" => $this->getAttributes(),
-        ),
-      );
-    }
 }

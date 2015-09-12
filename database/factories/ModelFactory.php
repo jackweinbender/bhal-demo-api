@@ -28,3 +28,14 @@ $factory->define(App\Letter::class, function ($faker) {
       'transliteration' => $faker->randomLetter,
     ];
 });
+
+$factory->define(App\Root::class, function ($faker) {
+    return [
+      'root' => $faker->word,
+      'historical_root' => $faker->word,
+      'root_slug' => (string) $faker->word,
+      'homonym_number' => $faker->randomNumber([0,1,2]),
+      'display' => (string) $faker->randomLetter,
+      'basic_definition' => $faker->word,
+    ];
+});
