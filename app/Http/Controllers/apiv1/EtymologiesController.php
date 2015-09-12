@@ -61,6 +61,10 @@ class EtymologiesController extends Apiv1Controller
       if(!Input::has('data.relationships.root')){
         return response('No Relationship sent', 400);
       }
+      if(!Input::has('data.relationships.root.data.id')){
+        return response('No ID sent', 400);
+      }
+
 
       $root_id = Input::get('data.relationships.root.data.id');
 
@@ -75,7 +79,7 @@ class EtymologiesController extends Apiv1Controller
 
       $root->etymology()->save($etymology);
       $root->etymology;
-      
+
       return $this->res->includes(['etymology'])->item($root)->send();
     }
 
@@ -110,10 +114,38 @@ class EtymologiesController extends Apiv1Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+     public function update(Request $request, $id)
+     {
+       // Validation
+       if(!Input::has('data') || Input::get('data') == []){
+         return response('No Data Sent', 400);
+       }
+       if(!Input::has('data.type')){
+         return response('No Type Specified', 400);
+       }
+       if(Input::get('data.type') != 'etymologys'){
+         return response('Wrong Type Specified', 400);
+       }
+       if(!Input::has('data.attributes')){
+         return response('No Attributes sent', 400);
+       }
+
+       // Setup
+       $attrs = Input::get('data.attributes');
+
+       // UPDATE
+       if(is_numeric($id)){
+         $etymology = Etymology::findOrFail($id);
+       } else {
+         $etymology = Etymology::where('transliteration', $id)->firstOrFail();
+       }
+
+       $etymology->fill($attrs);
+       $etymology->save();
+
+       return $this->res->item($etymology)->send();
+
+     }
 
     /**
      * Remove the specified resource from storage.

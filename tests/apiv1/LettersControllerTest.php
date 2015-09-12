@@ -1,19 +1,18 @@
 <?php
 
 use App\Letter;
-use App\Root;
 
 class LettersControllerTest extends ApiTestCase
 {
     /** Testing GET routes **/
     public function testGetRoutesOK()
     {
-      $this->makeLetter();
+      $letter = factory(Letter::class)->create();
 
       $this->get('/api/v1/letters')
           ->seeJson()
           ->assertResponseOk();
-      $this->get('/api/v1/letters/a')
+      $this->get('/api/v1/letters/' . $letter->id)
           ->seeJson()
           ->assertResponseOk();
     }
@@ -23,58 +22,60 @@ class LettersControllerTest extends ApiTestCase
     /** Testing PUT routes **/
     public function testPutRouteWithoutPayload()
     {
-      $this->makeLetter();
+      $letter = factory(Letter::class)->create();
 
-      $this->put('/api/v1/letters/a')
+      $this->put('/api/v1/letters/' . $letter->id)
         ->see('No Data Sent')
         ->assertResponseStatus(400);
     }
     public function testPutRouteWithEmptyPayload()
     {
-      $this->makeLetter();
+      $letter = factory(Letter::class)->create();
 
-      $this->put('/api/v1/letters/a', [])
+      $this->put('/api/v1/letters/' . $letter->id, [])
         ->see('No Data Sent')
         ->assertResponseStatus(400);
     }
     public function testPutRouteWithoutType()
     {
-      $this->makeLetter();
+      $letter = factory(Letter::class)->create();
 
-      $payload = $this->getPayload();
+      $payload['data'] = $letter->resourceObject();
       $payload['data'] = 'wrong';
 
-      $this->put('/api/v1/letters/a', $payload)
+      $this->put('/api/v1/letters/' . $letter->id, $payload)
         ->see('No Type Specified')
         ->assertResponseStatus(400);
     }
     public function testPutRouteWithWrongType()
     {
-      $this->makeLetter();
+      $letter = factory(Letter::class)->create();
 
-      $payload = $this->getPayload();
+      $payload['data'] = $letter->resourceObject();
       $payload['data']['type'] = 'wrong';
 
-      $this->put('/api/v1/letters/a', $payload)
+      $this->put('/api/v1/letters/' . $letter->id, $payload)
         ->see('Wrong Type Specified')
         ->assertResponseStatus(400);
     }
     public function testPutRouteWithoutAttributes()
     {
-      $this->makeLetter();
+      $letter = factory(Letter::class)->create();
 
-      $payload = $this->getPayload();
+      $payload['data'] = $letter->resourceObject();
       unset($payload['data']['attributes']);
 
-      $this->put('/api/v1/letters/a', $payload)
+      $this->put('/api/v1/letters/' . $letter->id, $payload)
         ->see('No Attributes sent')
         ->assertResponseStatus(400);
     }
     public function testPutRouteWithPayload()
     {
-      $this->makeLetter();
+      $letter = factory(Letter::class)->create();
 
-      $this->put('/api/v1/letters/a', $this->getPayload())
+      $payload['data'] = $letter->resourceObject();
+
+      $this->put('/api/v1/letters/' . $letter->id, $payload)
         ->seeJson()
         ->assertResponseOk();
     }
@@ -87,54 +88,13 @@ class LettersControllerTest extends ApiTestCase
      */
     public function testPatchRouteWithPayload()
     {
-      $this->makeLetter();
+      $letter = factory(Letter::class)->create();
 
-      $this->patch('/api/v1/letters/a', $this->getPayload())
+      $payload['data'] = $letter->resourceObject();
+
+      $this->patch('/api/v1/letters/' . $letter->id, $payload)
         ->seeJson()
         ->assertResponseOk();
     }
 
-    /**
-     * Pirate functions
-     */
-
-    /**
-     * Adds a given number of Letetrs to the DB.
-     *
-     * @param  integer $i Number of Letters to be added, defaults to One
-     * @return
-     */
-    protected function makeLetter($i = 1){
-      while ($i > 0) {
-        $attrs = $this->getAttributes();
-        Letter::create($attrs);
-        $i--;
-      }
-    }
-
-    /**
-     * Provides the class attributes via Faker
-     * @return Array of attributes
-     */
-    protected function getAttributes(){
-      return array(
-        "name" => $this->fake->word,
-        "asciitranslit" => $this->fake->word,
-        "letter" => $this->fake->randomLetter,
-        "transliteration" => 'a',
-      );
-    }
-
-    /**
-     * Mocks a full payload object for Letter
-     * @return Array formatted for JSONAPI
-     */
-    protected function getPayload(){
-      return array(
-        "data" => array(
-          "type" => "letters",
-          "attributes" => $this->getAttributes(),
-        ),
-      );
-    }
 }

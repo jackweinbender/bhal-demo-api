@@ -18,108 +18,108 @@ class EtymologiesControllerTest extends ApiTestCase
           ->assertResponseOK();
     }
 
-    // /** Testing PUT routes **/
-    // public function testPutRouteWithoutPayload()
-    // {
-    //   $this->makeEtymology();
-    //
-    //   $this->put('/api/v1/etymologies/1')
-    //     ->see('No Data Sent')
-    //     ->assertResponseStatus(400);
-    // }
-    // public function testPutRouteWithoutType()
-    // {
-    //   $this->makeEtymology();
-    //   $payload['data'] = 'wrong';
-    //
-    //   $this->put('/api/v1/etymologies/1', $payload)
-    //     ->see('No Type Specified')
-    //     ->assertResponseStatus(400);
-    // }
-    // public function testPutRouteWithWrongType()
-    // {
-    //   $this->makeEtymology();
-    //   $payload = $this->getPayload();
-    //   $payload['data']['type'] = 'wrong';
-    //
-    //   $this->put('/api/v1/etymologies/1', $payload)
-    //     ->see('Wrong Type Specified')
-    //     ->assertResponseStatus(400);
-    // }
-    // public function testPutRouteWithouAttributes()
-    // {
-    //   $this->makeEtymology();
-    //   $payload = $this->getPayload();
-    //   unset($payload['data']['attributes']);
-    //
-    //   $this->put('/api/v1/etymologies/1', $payload)
-    //     ->see('No Attributes sent')
-    //     ->assertResponseStatus(400);
-    // }
-    // public function testPutRouteWithPayload()
-    // {
-    //   $this->makeEtymology();
-    //   $payload = $this->getPayload();
-    //
-    //   $this->put('/api/v1/etymologies/1', $payload)
-    //     ->seeJson()
-    //     ->assertResponseOK();
-    // }
-    //
-    // /** Testing PATCH routes **/
-    // public function testPatchRouteWithoutPayload()
-    // {
-    //   $this->makeEtymology();
-    //
-    //   $this->patch('/api/v1/etymologies/1')
-    //     ->see('No Data Sent')
-    //     ->assertResponseStatus(400);
-    // }
-    // public function testPatchRouteWithoutType()
-    // {
-    //   $this->makeEtymology();
-    //   $payload['data'] = 'wrong';
-    //
-    //   $this->patch('/api/v1/etymologies/1', $payload)
-    //     ->see('No Type Specified')
-    //     ->assertResponseStatus(400);
-    // }
-    // public function testPatchRouteWithWrongType()
-    // {
-    //   $this->makeEtymology();
-    //   $payload = $this->getPayload();
-    //   $payload['data']['type'] = 'wrong';
-    //
-    //   $this->patch('/api/v1/etymologies/1', $payload)
-    //     ->see('Wrong Type Specified')
-    //     ->assertResponseStatus(400);
-    // }
-    // public function testPatchRouteWithouAttributes()
-    // {
-    //   $this->makeEtymology();
-    //   $payload = $this->getPayload();
-    //   unset($payload['data']['attributes']);
-    //
-    //   $this->patch('/api/v1/etymologies/1', $payload)
-    //     ->see('No Attributes sent')
-    //     ->assertResponseStatus(400);
-    // }
-    // public function testPatchRouteWithPayload()
-    // {
-    //   $this->makeEtymology();
-    //   $payload = $this->getPayload();
-    //
-    //   $this->patch('/api/v1/etymologies/1', $payload)
-    //     ->seeJson()
-    //     ->assertResponseOK();
-    // }
-    //
-    // /** Test POST routes **/
-    // public function testPostRouteWithoutPayload()
-    // {
-    //   $this->post('/api/v1/etymologies')
-    //     ->assertResponseStatus(400);
-    // }
+    /** Testing PUT routes **/
+    public function testPutRouteWithoutPayload()
+    {
+      $this->makeEtymology();
+
+      $this->put('/api/v1/etymologies/1')
+        ->see('No Data Sent')
+        ->assertResponseStatus(400);
+    }
+    public function testPutRouteWithoutType()
+    {
+      $this->makeEtymology();
+      $payload['data'] = 'wrong';
+
+      $this->put('/api/v1/etymologies/1', $payload)
+        ->see('No Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPutRouteWithWrongType()
+    {
+      $this->makeEtymology();
+      $payload = $this->getPayload();
+      $payload['data']['type'] = 'wrong';
+
+      $this->put('/api/v1/etymologies/1', $payload)
+        ->see('Wrong Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPutRouteWithouAttributes()
+    {
+      $this->makeEtymology();
+      $payload = $this->getPayload();
+      unset($payload['data']['attributes']);
+
+      $this->put('/api/v1/etymologies/1', $payload)
+        ->see('No Attributes sent')
+        ->assertResponseStatus(400);
+    }
+    public function testPutRouteWithPayload()
+    {
+      $this->makeEtymology();
+      $payload = $this->getPayload();
+
+      $this->put('/api/v1/etymologies/1', $payload)
+        ->seeJson()
+        ->assertResponseOK();
+    }
+
+    /** Testing PATCH routes **/
+    public function testPatchRouteWithoutPayload()
+    {
+      $this->makeEtymology();
+
+      $this->patch('/api/v1/etymologies/1')
+        ->see('No Data Sent')
+        ->assertResponseStatus(400);
+    }
+    public function testPatchRouteWithoutType()
+    {
+      $this->makeEtymology();
+      $payload['data'] = 'wrong';
+
+      $this->patch('/api/v1/etymologies/1', $payload)
+        ->see('No Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPatchRouteWithWrongType()
+    {
+      $this->makeEtymology();
+      $payload = $this->getPayload();
+      $payload['data']['type'] = 'wrong';
+
+      $this->patch('/api/v1/etymologies/1', $payload)
+        ->see('Wrong Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPatchRouteWithouAttributes()
+    {
+      $this->makeEtymology();
+      $payload = $this->getPayload();
+      unset($payload['data']['attributes']);
+
+      $this->patch('/api/v1/etymologies/1', $payload)
+        ->see('No Attributes sent')
+        ->assertResponseStatus(400);
+    }
+    public function testPatchRouteWithPayload()
+    {
+      $this->makeEtymology();
+      $payload = $this->getPayload();
+
+      $this->patch('/api/v1/etymologies/1', $payload)
+        ->seeJson()
+        ->assertResponseOK();
+    }
+
+    /** Test POST routes **/
+    public function testPostRouteWithoutPayload()
+    {
+      $this->post('/api/v1/etymologies')
+        ->assertResponseStatus(400);
+    }
     // public function testPostRouteWithPayload()
     // {
     //   $payload = $this->getPayload();
@@ -180,8 +180,15 @@ class EtymologiesControllerTest extends ApiTestCase
     protected function getPayload(){
       return array(
         "data" => array(
-          "type" => "etymologies",
+          "type" => "etymologys",
           "attributes" => $this->getAttributes(),
+          "relationships" => array(
+            "root" => array(
+              "data" => array(
+                "id" => "1"
+              ),
+            ),
+          ),
         ),
       );
     }
