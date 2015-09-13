@@ -8,6 +8,7 @@ use Jackweinbender\LaravelJsonapi\JsonApi;
 class Etymology extends JsonApiModelAbstract
 {
 
+  protected $modelType = 'etymologies';
   protected $fillable = ['discussion', 'literature', 'root_id'];
 
   public function root(){

@@ -47,7 +47,7 @@ class EtymologiesControllerTest extends ApiTestCase
     }
     public function testPutRouteWithouAttributes()
     {
-      $payload['data'] = ['type' => 'etymologys'];
+      $payload['data'] = ['type' => 'etymologies'];
 
       $this->put('/api/v1/etymologies/123', $payload)
         ->see('No Attributes sent')

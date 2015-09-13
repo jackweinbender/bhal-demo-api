@@ -102,7 +102,7 @@ class EtymologiesController extends Apiv1Controller
        if(!Input::has('data.type')){
          return response('No Type Specified', 400);
        }
-       if(Input::get('data.type') != 'etymologys'){
+       if(Input::get('data.type') != 'etymologies'){
          return response('Wrong Type Specified', 400);
        }
        if(!Input::has('data.attributes')){
