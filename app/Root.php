@@ -38,8 +38,18 @@ class Root extends JsonApiModelAbstract
     public static function boot()
         {
             parent::boot();
-            // Do this on every save (create/update)
+            // Do this on every create
+            static::created(function($root){
+              // Make and Attach a new Etymology record.
+              // This is a 1-1 relationship.
+              $ety = new Etymology;
+              $root->etymology()->save($ety);
+            });
+
+            // Do this on every save (create or update)
             static::saving(function($root){
+              // Make sure that roots w/o homonyms don't use
+              // dasherized root_slugs
               if($root->homonym_number != 0 && $root->display != ""){
                 $root->root_slug = $root->display . "-" . $root->homonym_number;
               } else {
