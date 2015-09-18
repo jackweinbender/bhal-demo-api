@@ -35,7 +35,7 @@ $factory->define(App\Root::class, function ($faker) {
       'root' => $faker->randomElement($alpha) . $faker->randomElement($alpha) . $faker->randomElement($alpha),
       'historical_root' => $faker->randomLetter . $faker->randomLetter . $faker->randomLetter,
       'homonym_number' => $faker->randomElement([0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 4]),
-      'display' => $faker->randomLetter . $faker->randomLetter . $faker->randomLetter,
+      'display' => $faker->randomLetter . $faker->randomLetter . $faker->randomLetter . $faker->randomLetter . $faker->randomLetter,
       'basic_definition' => $faker->sentence(3),
     ];
 });

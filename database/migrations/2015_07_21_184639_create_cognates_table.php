@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEtymologiesTable extends Migration
+class CreateCognatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateEtymologiesTable extends Migration
     public function up()
     {
 
-        Schema::create('etymologies', function(Blueprint $table){
+        Schema::create('cognates', function(Blueprint $table){
 
           $table->increments('id');
-          $table->text('discussion')
-            ->nullable()
-            ->default(NULL);
-          $table->text('literature')
-            ->nullable()
-            ->default(NULL);
+          $table->text('name')
+            ->nullable();
+          $table->text('abbr')
+            ->nullable();
+          $table->text('slug')
+            ->nullable();
           /* Relational bits */
           $table->integer('root_id')->unsigned();
-          $table->foreign('root_id')->references('id')->on('roots');
+          $table->foreign('root_id')->references('id')->on('root');
           // Timestamps
           $table->timestamps();
 
@@ -38,6 +38,6 @@ class CreateEtymologiesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('etymologies');
+        Schema::drop('cognates');
     }
 }

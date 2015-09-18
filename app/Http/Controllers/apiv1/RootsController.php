@@ -62,12 +62,12 @@ class RootsController extends Apiv1Controller
     public function show($id)
     {
         if(is_numeric($id)){
-          $root = Root::with('etymology')->findOrFail($id);
+          $root = Root::with(['etymology', 'cognates'])->findOrFail($id);
         } else {
-          $root = Root::with('etymology')->where('root_slug', $id)->firstOrFail();
+          $root = Root::with(['etymology', 'cognates'])->where('root_slug', $id)->firstOrFail();
         }
 
-        return $this->res->includes(['etymology'])->item($root)->send();
+        return $this->res->includes(['etymology', 'cognates'])->item($root)->send();
     }
 
     /**

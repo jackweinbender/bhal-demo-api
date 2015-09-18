@@ -24,6 +24,12 @@ class Root extends JsonApiModelAbstract
 
     }
 
+    public function cognates(){
+
+      return $this->hasMany('App\Cognate');
+
+    }
+
     public function attributes(){
       return array(
         'root' => (string) $this->root,
@@ -44,6 +50,97 @@ class Root extends JsonApiModelAbstract
               // This is a 1-1 relationship.
               $ety = new Etymology;
               $root->etymology()->save($ety);
+
+
+              // Add boilerplate cognates
+              $cognates = [];
+              $languages = [
+                [
+                  "name" => "Inscriptional Hebrew",
+                  "abbr" => "Insc. Hebr.",
+                  "slug" => "insc_hebrew",
+                ],
+                [
+                  "name" => "Qumran Hebrew",
+                  "abbr" => "Qum. Hebr.",
+                  "slug" => "qumran_hebrew",
+                ],
+                [
+                  "name" => "Rabbinic Hebrew ",
+                  "abbr" => "Rab. Hebr.",
+                  "slug" => "rabbinic_hebrew",
+                ],
+                [
+                  "name" => "Canaanite Inscriptions",
+                  "abbr" => "Can. Insc.",
+                  "slug" => "canaanite_inscriptions",
+                ],
+                [
+                  "name" => "Deir ˤAllā",
+                  "abbr" => "DA",
+                  "slug" => "deir_alla",
+                ],
+                [
+                  "name" => "Aramaic",
+                  "abbr" => "Aram.",
+                  "slug" => "aramaic",
+                ],
+                [
+                  "name" => "Ugaritic",
+                  "abbr" => "Ug.",
+                  "slug" => "ugaritic",
+                ],
+                [
+                  "name" => "Amorite",
+                  "abbr" => "Amor.",
+                  "slug" => "amorite",
+                ],
+                [
+                  "name" => "Arabic",
+                  "abbr" => "Arab.",
+                  "slug" => "arabic",
+                ],
+                [
+                  "name" => "Ancient South Arabian",
+                  "abbr" => "ASA",
+                  "slug" => "asa",
+                ],
+                [
+                  "name" => "Ethiopic",
+                  "abbr" => "Eth.",
+                  "slug" => "ethiopic",
+                ],
+                [
+                  "name" => "Modern South Arabian",
+                  "abbr" => "MSAL",
+                  "slug" => "msal",
+                ],
+                [
+                  "name" => "Akkadian",
+                  "abbr" => "Akk.",
+                  "slug" => "akkadian",
+                ],
+                [
+                  "name" => "Eblaite",
+                  "abbr" => "Ebl.",
+                  "slug" => "eblaite",
+                ],
+                [
+                  "name" => "Egyptian",
+                  "abbr" => "Egy.",
+                  "slug" => "egyptian",
+                ],
+              ];
+
+
+              foreach ($languages as $language) {
+                $cognate = new Cognate;
+                $cognate->fill($language);
+
+                $cognates[] = $cognate;
+              }
+
+              $root->cognates()->saveMany($cognates);
             });
 
             // Do this on every save (create or update)
