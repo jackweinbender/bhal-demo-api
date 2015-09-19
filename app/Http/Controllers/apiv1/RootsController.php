@@ -123,7 +123,7 @@ class RootsController extends Apiv1Controller
 
         if($root){
           $root->delete();
-          return response(['message'=>"Successfully deleted root with id $id"], 200);
+          return response(['message'=>"Successfully deleted Root with id $id"], 200);
         }
 
         return response(['message'=>"Unable to delete Root with id $id"], 400);

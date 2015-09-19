@@ -10,7 +10,7 @@ class cognate extends JsonApiModelAbstract
   protected $modelType = 'cognates';
   protected $fillable = ['name', 'abbr', 'slug'];
 
-  public function etymology(){
+  public function root(){
 
     return $this->belongsTo('App\Root');
 

@@ -9,14 +9,13 @@ class EtymologiesControllerTest extends ApiTestCase
     /** Testing GET routes **/
     public function testGetRoutesOK()
     {
+      // Etymologies are auto-created with Roots
       $root = factory(Root::class)->create();
-      $etymology = factory(Etymology::class)->make();
-      $root->etymology()->save($etymology);
 
       $this->get('/api/v1/etymologies')
           ->seeJson()
           ->assertResponseOK();
-      $this->get('/api/v1/etymologies/' . $etymology->id)
+      $this->get('/api/v1/etymologies/' . $root->etymology->id)
           ->seeJson()
           ->assertResponseOK();
     }
@@ -56,12 +55,10 @@ class EtymologiesControllerTest extends ApiTestCase
     public function testPutRouteWithPayload()
     {
       $root = factory(Root::class)->create();
-      $etymology = factory(Etymology::class)->make();
-      $root->etymology()->save($etymology);
 
-      $payload['data'] = $etymology->resourceObject();
+      $payload['data'] = $root->etymology->resourceObject();
 
-      $this->put('/api/v1/etymologies/' . $etymology->id, $payload)
+      $this->put('/api/v1/etymologies/' . $root->etymology->id, $payload)
         ->seeJson()
         ->assertResponseOK();
     }
@@ -70,12 +67,10 @@ class EtymologiesControllerTest extends ApiTestCase
     public function testPatchRouteWithPayload()
     {
       $root = factory(Root::class)->create();
-      $etymology = factory(Etymology::class)->make();
-      $root->etymology()->save($etymology);
 
-      $payload['data'] = $etymology->resourceObject();
+      $payload['data'] = $root->etymology->resourceObject();
 
-      $this->patch('/api/v1/etymologies/' . $etymology->id, $payload)
+      $this->patch('/api/v1/etymologies/' . $root->etymology->id, $payload)
         ->seeJson()
         ->assertResponseOK();
     }
@@ -89,9 +84,8 @@ class EtymologiesControllerTest extends ApiTestCase
     public function testPostRouteWithPayload()
     {
       $root = factory(Root::class)->create();
-      $etymology = factory(Etymology::class)->make();
 
-      $payload['data'] = $etymology->resourceObject();
+      $payload['data'] = $root->etymology->resourceObject();
       $payload['data']['relationships']['root']['data'] = $root->rid();
 
       $this->post('/api/v1/etymologies', $payload)
@@ -102,11 +96,9 @@ class EtymologiesControllerTest extends ApiTestCase
     public function testDeleteRoute()
     {
       $root = factory(Root::class)->create();
-      $etymology = factory(Etymology::class)->make();
-      $root->etymology()->save($etymology);
 
-      $this->delete('/api/v1/etymologies/' . $etymology->id)
-        ->seeJson(['message'=>"Successfully deleted root with id " . $etymology->id])
+      $this->delete('/api/v1/etymologies/' . $root->etymology->id)
+        ->seeJson(['message'=>"Successfully deleted Etymology with id " . $root->etymology->id])
         ->assertResponseOK();
     }
     public function testDeleteRouteWithBadId()

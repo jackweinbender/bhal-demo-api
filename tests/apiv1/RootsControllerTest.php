@@ -104,7 +104,7 @@ class RootsControllerTest extends ApiTestCase
       $root = factory(Root::class)->create();
 
       $this->delete('/api/v1/roots/' . $root->id)
-        ->seeJson(['message'=>"Successfully deleted root with id " . $root->id])
+        ->seeJson(['message'=>"Successfully deleted Root with id " . $root->id])
         ->assertResponseOK();
     }
     public function testDeleteRouteWithBadId()

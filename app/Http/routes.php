@@ -53,6 +53,14 @@ Route::group([
   Route::patch('etymologies/{id}', 'EtymologiesController@update');
   Route::delete('etymologies/{id}', 'EtymologiesController@destroy');
 
+  // Cognates
+  Route::get('cognates', 'CognatesController@index');
+  Route::post('cognates', 'CognatesController@store');
+  Route::get('cognates/{id}', 'CognatesController@show');
+  Route::put('cognates/{id}', 'CognatesController@update');
+  Route::patch('cognates/{id}', 'CognatesController@update');
+  Route::delete('cognates/{id}', 'CognatesController@destroy');
+
   // Lemmas
   // Route::get('lemmas', 'LemmasController@index');
   Route::get('lemmas/{id}', 'LemmasController@show');

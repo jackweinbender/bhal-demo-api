@@ -8,10 +8,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use \Input;
 
-use App\Etymology;
+use App\Cognate;
 use App\Root;
 
-class EtymologiesController extends Apiv1Controller
+class CognatesController extends Apiv1Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,12 +23,12 @@ class EtymologiesController extends Apiv1Controller
       $input = Input::get('filter');
       if(!$input){
 
-        $etymologies = Etymology::get();
-        return $this->res->collection($etymologies)->send();
+        $cognates = Cognate::get();
+        return $this->res->collection($cognates)->send();
       }
 
-      $etymologies = Etymology::find(explode(',', $input['id']));
-      return $this->res->collection($etymologies)->send();
+      $cognates = Cognate::find(explode(',', $input['id']));
+      return $this->res->collection($cognates)->send();
     }
 
     /**
@@ -64,13 +64,13 @@ class EtymologiesController extends Apiv1Controller
         $root = Root::where('root_slug', $root_id)->firstOrFail();
       }
 
-      $etymology = new Etymology;
-      $etymology->fill(Input::get('data.attributes'));
+      $cognate = new Cognate;
+      $cognate->fill(Input::get('data.attributes'));
 
-      $root->etymology()->save($etymology);
-      $etymology->root;
+      $root->cognates()->save($cognate);
+      $cognate->root;
 
-      return $this->res->item($etymology)->send();
+      return $this->res->item($cognate)->send();
     }
 
     /**
@@ -81,9 +81,9 @@ class EtymologiesController extends Apiv1Controller
      */
     public function show($id)
     {
-      $etymology = Etymology::findOrFail($id);
+      $cognate = Cognate::findOrFail($id);
 
-      return $this->res->item($etymology)->send();
+      return $this->res->item($cognate)->send();
     }
 
     /**
@@ -102,7 +102,7 @@ class EtymologiesController extends Apiv1Controller
        if(!Input::has('data.type')){
          return response('No Type Specified', 400);
        }
-       if(Input::get('data.type') != 'etymologies'){
+       if(Input::get('data.type') != 'cognates'){
          return response('Wrong Type Specified', 400);
        }
        if(!Input::has('data.attributes')){
@@ -114,15 +114,15 @@ class EtymologiesController extends Apiv1Controller
 
        // UPDATE
        if(is_numeric($id)){
-         $etymology = Etymology::findOrFail($id);
+         $cognate = Cognate::findOrFail($id);
        } else {
-         $etymology = Etymology::where('transliteration', $id)->firstOrFail();
+         $cognate = Cognate::where('slug', $id)->firstOrFail();
        }
 
-       $etymology->fill($attrs);
-       $etymology->save();
+       $cognate->fill($attrs);
+       $cognate->save();
 
-       return $this->res->item($etymology)->send();
+       return $this->res->item($cognate)->send();
 
      }
 
@@ -134,13 +134,13 @@ class EtymologiesController extends Apiv1Controller
       */
      public function destroy($id)
      {
-         $etymology = Etymology::find($id);
+         $cognate = Cognate::find($id);
 
-         if($etymology){
-           $etymology->delete();
-           return response(['message'=>"Successfully deleted Etymology with id $id"], 200);
+         if($cognate){
+           $cognate->delete();
+           return response(['message'=>"Successfully deleted Cognate with id $id"], 200);
          }
 
-         return response(['message'=>"Unable to delete Etymology with id $id"], 400);
+         return response(['message'=>"Unable to delete Cognate with id $id"], 400);
      }
 }
