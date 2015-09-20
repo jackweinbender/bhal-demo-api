@@ -12,20 +12,20 @@ class CreateDefinitionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('definitions', function(Blueprint $table){
-
-          $table->increments('id');
-          $table->string('title');
-          $table->text('body');
-          $table->string('content');
-
-          // Relational bits
-          $table->integer('lemma_id')->unsigned();
-          $table->foreign('lemma_id')->references('id')->on('lemmas');
-          // Timestamps
-          $table->timestamps();
-
-        });
+        // Schema::create('definitions', function(Blueprint $table){
+        //
+        //   $table->increments('id');
+        //   $table->string('title');
+        //   $table->text('body');
+        //   $table->string('content');
+        //
+        //   // Relational bits
+        //   $table->integer('lemma_id')->unsigned();
+        //   $table->foreign('lemma_id')->references('id')->on('lemmas');
+        //   // Timestamps
+        //   $table->timestamps();
+        //
+        // });
     }
 
     /**
@@ -35,6 +35,6 @@ class CreateDefinitionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('definitions');
+        // Schema::drop('definitions');
     }
 }

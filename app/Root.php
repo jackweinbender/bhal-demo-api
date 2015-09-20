@@ -30,6 +30,12 @@ class Root extends JsonApiModelAbstract
 
     }
 
+    public function root_tags(){
+
+      return $this->belongsToMany('App\RootTag');
+
+    }
+
     public function attributes(){
       return array(
         'root' => (string) $this->root,
