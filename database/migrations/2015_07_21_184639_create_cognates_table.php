@@ -16,11 +16,13 @@ class CreateCognatesTable extends Migration
         Schema::create('cognates', function(Blueprint $table){
 
           $table->increments('id');
-          $table->text('name')
+          $table->string('name')
             ->nullable();
-          $table->text('abbr')
+          $table->string('abbr')
             ->nullable();
-          $table->text('slug')
+          $table->string('slug')
+            ->nullable();
+          $table->text('description')
             ->nullable();
           /* Relational bits */
           $table->integer('root_id')->unsigned();

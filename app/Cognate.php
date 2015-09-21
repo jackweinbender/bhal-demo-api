@@ -8,7 +8,7 @@ use Jackweinbender\LaravelJsonapi\JsonApi;
 class cognate extends JsonApiModelAbstract
 {
   protected $modelType = 'cognates';
-  protected $fillable = ['name', 'abbr', 'slug'];
+  protected $fillable = ['name', 'abbr', 'slug', 'description'];
 
   public function root(){
 
@@ -21,6 +21,7 @@ class cognate extends JsonApiModelAbstract
       'slug' => (string) $this->slug,
       'name' => (string) $this->name,
       'abbr' => (string) $this->abbr,
+      'description' => (string) $this->description,
     );
   }
 
