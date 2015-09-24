@@ -36,7 +36,8 @@ class CreateRootsTable extends Migration
             ->default(NULL);
 
           /* Relational bits */
-          $table->string('letter_id')
+          $table->integer('letter_id')
+            ->unsigned()
             ->nullable();
           $table->foreign('letter_id')->references('id')->on('letters');
           // Timestamps

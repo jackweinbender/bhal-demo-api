@@ -26,7 +26,7 @@ class CreateCognatesTable extends Migration
             ->nullable();
           /* Relational bits */
           $table->integer('root_id')->unsigned();
-          $table->foreign('root_id')->references('id')->on('root');
+          $table->foreign('root_id')->references('id')->on('roots');
           // Timestamps
           $table->timestamps();
 

@@ -17,8 +17,8 @@ class CreateRootRootTagsTable extends Migration
           ->unsigned();
         $table->integer('root_id')
           ->unsigned();
-        $table->foreign('root_tag_id')->references('id')->on('root_tag');
-        $table->foreign('root_id')->references('id')->on('root');
+        $table->foreign('root_tag_id')->references('id')->on('root_tags');
+        $table->foreign('root_id')->references('id')->on('roots');
       });
     }
 
