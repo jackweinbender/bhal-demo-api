@@ -1,14 +1,13 @@
 language: php
-
 php:
-  - 5.4
   - 5.5
   - 5.6
   - hhvm
-before_install:
-  - composer self-update
-  - composer install
-  - touch ./storage/database-testing.sqlite
-  - php artisan migrate --database=testing
-
-script: "phpunit"
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-dist
+  - php artisan key:generate
+  - touch storage/database-testing.sqlite
+  - php artisan migrate --force
+script:
+  - phpunit
