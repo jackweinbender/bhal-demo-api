@@ -8,6 +8,6 @@ before_script:
   - travis_retry composer install --no-interaction --prefer-dist
   - php artisan key:generate
   - touch storage/database-testing.sqlite
-  - php artisan migrate --force
+  - php artisan migrate --database=testing --force
 script:
   - phpunit
