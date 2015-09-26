@@ -37,6 +37,14 @@ Route::group([
   Route::patch('letters/{id}', 'LettersController@update');
   Route::post('letters/{id}', 'LettersController@attach');
 
+  // Root Tags
+  Route::get('roots/tags', 'RootTagsController@index');
+  // Route::post('roots/tags', 'RootTagsController@store');
+  Route::get('roots/tags/{id}', 'RootTagsController@show');
+  // Route::put('roots/tags/{id}', 'RootTagsController@update');
+  // Route::patch('roots/tags/{id}', 'RootTagsController@update');
+  // Route::delete('roots/tags/{id}', 'RootTagsController@destroy');
+
   // Roots
   Route::get('roots', 'RootsController@index');
   Route::post('roots', 'RootsController@store');

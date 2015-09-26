@@ -8,7 +8,7 @@ use Jackweinbender\LaravelJsonapi\JsonApi;
 class RootTag extends JsonApiModelAbstract
 {
   protected $fillable = ['name'];
-  protected $modelId = 'root_tag';
+  protected $modelId = 'id';
 
 
   public function roots(){
