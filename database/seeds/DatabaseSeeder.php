@@ -23,7 +23,20 @@ class DatabaseSeeder extends Seeder
           $letter->roots()->saveMany($roots);
         });
 
+        $tags = factory(App\RootTag::class, 10)->create();
 
+        $roots = App\Root::get();
+        $roots->each(function($root){
+          $numTags = rand(0, 4);
+
+          for ($i = 0; $i < $numTags; $i++) {
+              $tagId = rand(1, 10);
+              $addTag = App\RootTag::find($tagId);
+              $root->tags()->attach($addTag);
+          }
+
+          $root->save();
+        });
 
 
 

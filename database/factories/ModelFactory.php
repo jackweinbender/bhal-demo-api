@@ -40,6 +40,12 @@ $factory->define(App\Root::class, function ($faker) {
     ];
 });
 
+$factory->define(App\RootTag::class, function($faker){
+    return [
+        'name' => $faker->word,
+    ];
+});
+
 $factory->define(App\Etymology::class, function ($faker) {
     return [
       'discussion' => $faker->word,
