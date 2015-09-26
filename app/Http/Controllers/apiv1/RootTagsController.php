@@ -49,8 +49,8 @@ class RootTagsController extends Apiv1Controller
      */
     public function show($id)
     {
-      $tag = RootTag::findOrFail($id);
-      return $this->res->item($tag)->send();
+      $tag = RootTag::with(['roots'])->findOrFail($id);
+      return $this->res->includes(['roots'])->item($tag)->send();
     }
 
     /**
