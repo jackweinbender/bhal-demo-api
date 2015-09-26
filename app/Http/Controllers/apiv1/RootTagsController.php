@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\RootTag;
+use Input;
 
 class RootTagsController extends Apiv1Controller
 {
@@ -21,16 +22,6 @@ class RootTagsController extends Apiv1Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -38,7 +29,21 @@ class RootTagsController extends Apiv1Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!Input::has('data')){
+          return response('No Data Sent', 400);
+        }
+        if(!Input::has('data.type')){
+          return response('No Type Specified', 400);
+        }
+        if(!Input::has('data.attributes')){
+          return response('No Attributes sent', 400);
+        }
+
+        $tag = new RootTag;
+        $tag->fill(Input::get('data.attributes'));
+        $tag->save();
+
+        return $this->res->item($tag)->send();
     }
 
     /**
@@ -49,19 +54,17 @@ class RootTagsController extends Apiv1Controller
      */
     public function show($id)
     {
-      $tag = RootTag::with(['roots'])->findOrFail($id);
-      return $this->res->includes(['roots'])->item($tag)->send();
-    }
+        if(is_numeric($id)){
+          $tag = RootTag::with(['roots'])
+            ->findOrFail($id);
+        } else {
+          $tag = RootTag::with(['roots'])
+            ->where('name', $id)->firstOrFail();
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->res
+          ->includes(['roots'])
+          ->item($tag)->send();
     }
 
     /**
@@ -73,7 +76,32 @@ class RootTagsController extends Apiv1Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(!Input::has('data')){
+          return response('No Data Sent', 400);
+        }
+        if(!Input::has('data.type')){
+          return response('No Type Specified', 400);
+        }
+        if(Input::get('data.type') != 'roottags'){
+          return response('Wrong Type Specified', 400);
+        }
+        if(!Input::has('data.attributes')){
+          return response('No Attributes sent', 400);
+        }
+
+        $attrs = Input::get('data.attributes');
+
+        if(is_numeric($id)){
+          $tag = RootTag::findOrFail($id);
+        } else {
+          $tag = RootTag::where('name', $id)->firstOrFail();
+        }
+
+        $tag->fill($attrs);
+        $tag->save();
+
+        return $this->res->item($tag)->send();
+
     }
 
     /**
@@ -84,6 +112,17 @@ class RootTagsController extends Apiv1Controller
      */
     public function destroy($id)
     {
-        //
+        if(is_numeric($id)){
+          $root = RootTag::where('id', $id)->first();
+        } else {
+          $root = RootTag::find($id);
+        }
+
+        if($root){
+          $root->delete();
+          return response(['message'=>"Successfully deleted RootTag with id $id"], 200);
+        }
+
+        return response(['message'=>"Unable to delete RootTag with id $id"], 400);
     }
 }

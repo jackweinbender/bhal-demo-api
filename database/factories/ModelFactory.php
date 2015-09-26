@@ -42,7 +42,7 @@ $factory->define(App\Root::class, function ($faker) {
 
 $factory->define(App\RootTag::class, function($faker){
     return [
-        'name' => $faker->word,
+        'name' => $faker->unique()->word,
     ];
 });
 
