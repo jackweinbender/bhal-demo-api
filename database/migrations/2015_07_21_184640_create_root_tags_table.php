@@ -15,7 +15,8 @@ class CreateRootTagsTable extends Migration
       Schema::create('root_tags', function(Blueprint $table){
         $table->increments('id')
           ->unsigned();
-        $table->string('name');
+        $table->string('name')
+          ->unique();
         $table->timestamps();
       });
     }
