@@ -9,6 +9,7 @@ class RootTag extends JsonApiModelAbstract
 {
   protected $fillable = ['name'];
   protected $modelId = 'id';
+  protected $modelType = 'root-tags';
 
 
   public function roots(){
