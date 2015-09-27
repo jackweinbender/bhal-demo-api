@@ -46,15 +46,15 @@ Route::group([
   Route::get('roots/tags', 'RootTagsController@index');
   Route::get('roots/tags/{id}', 'RootTagsController@show');
   Route::post('roots/tags', [
-    'middleware' => 'apiValidation:roottags',
+    'middleware' => 'apiValidation:root-tags',
     'uses' => 'RootTagsController@store',
   ]);
   Route::put('roots/tags/{id}', [
-    'middleware' => 'apiValidation:roottags',
+    'middleware' => 'apiValidation:root-tags',
     'uses' => 'RootTagsController@update',
   ]);
   Route::patch('roots/tags/{id}', [
-    'middleware' => 'apiValidation:roottags',
+    'middleware' => 'apiValidation:root-tags',
     'uses' => 'RootTagsController@update',
   ]);
   Route::delete('roots/tags/{id}', 'RootTagsController@destroy');
