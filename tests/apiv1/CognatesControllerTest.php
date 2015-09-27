@@ -47,7 +47,7 @@ class CognatesControllerTest extends ApiTestCase
     }
     public function testPutRouteWithouAttributes()
     {
-      $payload['data'] = ['type' => 'cognates'];
+      $payload['data']['type'] = 'cognates';
 
       $this->put('/api/v1/cognates/123', $payload)
         ->see('No Attributes sent')
@@ -84,6 +84,31 @@ class CognatesControllerTest extends ApiTestCase
     public function testPostRouteWithoutPayload()
     {
       $this->post('/api/v1/cognates')
+        ->see('No Data Sent')
+        ->assertResponseStatus(400);
+    }
+    public function testPostRouteWithoutType()
+    {
+      $payload['data'] = 'wrong';
+
+      $this->post('/api/v1/cognates', $payload)
+        ->see('No Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPostRouteWithWrongType()
+    {
+      $payload['data']['type'] = 'wrong';
+
+      $this->post('/api/v1/cognates', $payload)
+        ->see('Wrong Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPostRouteWithouAttributes()
+    {
+      $payload['data']['type'] = 'cognates';
+
+      $this->post('/api/v1/cognates', $payload)
+        ->see('No Attributes sent')
         ->assertResponseStatus(400);
     }
     public function testPostRouteWithPayload()
@@ -100,6 +125,7 @@ class CognatesControllerTest extends ApiTestCase
           ->assertResponseOK();
       });
     }
+    
     /** Test DELETE route **/
     public function testDeleteRoute()
     {
