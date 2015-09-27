@@ -79,10 +79,6 @@ Route::group([
   // Etymologies
   Route::get('etymologies', 'EtymologiesController@index');
   Route::get('etymologies/{id}', 'EtymologiesController@show');
-  Route::post('etymologies', [
-    'middleware' => 'apiValidation:etymologies',
-    'uses' => 'EtymologiesController@store',
-  ]);
   Route::put('etymologies/{id}', [
     'middleware' => 'apiValidation:etymologies',
     'uses' => 'EtymologiesController@update',
@@ -91,7 +87,6 @@ Route::group([
     'middleware' => 'apiValidation:etymologies',
     'uses' => 'EtymologiesController@update',
   ]);
-  Route::delete('etymologies/{id}', 'EtymologiesController@destroy');
 
   // Cognates
   Route::get('cognates', 'CognatesController@index');

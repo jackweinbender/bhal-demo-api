@@ -32,37 +32,6 @@ class EtymologiesController extends Apiv1Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-      // Validation
-      if(!Input::has('data.relationships.root.data.id')){
-        return response('No ID sent', 400);
-      }
-
-
-      $root_id = Input::get('data.relationships.root.data.id');
-
-      if(is_numeric($root_id)){
-        $root = Root::findOrFail($root_id);
-      } else {
-        $root = Root::where('root_slug', $root_id)->firstOrFail();
-      }
-
-      $etymology = new Etymology;
-      $etymology->fill(Input::get('data.attributes'));
-
-      $root->etymology()->save($etymology);
-      $etymology->root;
-
-      return $this->res->item($etymology)->send();
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -99,23 +68,5 @@ class EtymologiesController extends Apiv1Controller
 
        return $this->res->item($etymology)->send();
 
-     }
-
-     /**
-      * Remove the specified resource from storage.
-      *
-      * @param  int  $id
-      * @return Response
-      */
-     public function destroy($id)
-     {
-         $etymology = Etymology::find($id);
-
-         if($etymology){
-           $etymology->delete();
-           return response(['message'=>"Successfully deleted Etymology with id $id"], 200);
-         }
-
-         return response(['message'=>"Unable to delete Etymology with id $id"], 400);
      }
 }

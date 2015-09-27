@@ -86,6 +86,34 @@ class RootsControllerTest extends ApiTestCase
     public function testPostRouteWithoutPayload()
     {
       $this->post('/api/v1/roots')
+        ->see('No Data Sent')
+        ->assertResponseStatus(400);
+    }
+    public function testPostRouteWithoutType()
+    {
+      $payload['data'] = 'wrong';
+
+      $this->post('/api/v1/roots', $payload)
+        ->see('No Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPostRouteWithWrongType()
+    {
+      $payload['data']['type'] = 'wrong';
+
+      $this->post('/api/v1/roots', $payload)
+        ->see('Wrong Type Specified')
+        ->assertResponseStatus(400);
+    }
+    public function testPostRouteWithouAttributes()
+    {
+      $root = factory(Root::class)->make();
+
+      $payload['data'] = $root->resourceObject();
+      unset($payload['data']['attributes']);
+
+      $this->post('/api/v1/roots', $payload)
+        ->see('No Attributes sent')
         ->assertResponseStatus(400);
     }
     public function testPostRouteWithPayload()
