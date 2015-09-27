@@ -36,16 +36,6 @@ class RootsController extends Apiv1Controller
      */
     public function store(Request $request)
     {
-        if(!Input::has('data')){
-          return response('No Data Sent', 400);
-        }
-        if(!Input::has('data.type')){
-          return response('No Type Specified', 400);
-        }
-        if(!Input::has('data.attributes')){
-          return response('No Attributes sent', 400);
-        }
-
         $root = new Root;
         $root->fill(Input::get('data.attributes'));
         $root->save();
@@ -83,19 +73,6 @@ class RootsController extends Apiv1Controller
      */
     public function update(Request $request, $id)
     {
-        if(!Input::has('data')){
-          return response('No Data Sent', 400);
-        }
-        if(!Input::has('data.type')){
-          return response('No Type Specified', 400);
-        }
-        if(Input::get('data.type') != 'roots'){
-          return response('Wrong Type Specified', 400);
-        }
-        if(!Input::has('data.attributes')){
-          return response('No Attributes sent', 400);
-        }
-
         $attrs = Input::get('data.attributes');
 
         if(is_numeric($id)){

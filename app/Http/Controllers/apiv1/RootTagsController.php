@@ -29,16 +29,6 @@ class RootTagsController extends Apiv1Controller
      */
     public function store(Request $request)
     {
-        if(!Input::has('data')){
-          return response('No Data Sent', 400);
-        }
-        if(!Input::has('data.type')){
-          return response('No Type Specified', 400);
-        }
-        if(!Input::has('data.attributes')){
-          return response('No Attributes sent', 400);
-        }
-
         $tag = new RootTag;
         $tag->fill(Input::get('data.attributes'));
         $tag->save();
@@ -76,18 +66,6 @@ class RootTagsController extends Apiv1Controller
      */
     public function update(Request $request, $id)
     {
-        if(!Input::has('data')){
-          return response('No Data Sent', 400);
-        }
-        if(!Input::has('data.type')){
-          return response('No Type Specified', 400);
-        }
-        if(Input::get('data.type') != 'roottags'){
-          return response('Wrong Type Specified', 400);
-        }
-        if(!Input::has('data.attributes')){
-          return response('No Attributes sent', 400);
-        }
 
         $attrs = Input::get('data.attributes');
 
