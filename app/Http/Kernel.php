@@ -22,6 +22,6 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-
+      'apiValidation' => \Jackweinbender\LaravelJsonapi\JsonApiRequestValidation::class,
     ];
 }

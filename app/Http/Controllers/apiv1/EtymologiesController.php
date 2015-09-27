@@ -39,18 +39,7 @@ class EtymologiesController extends Apiv1Controller
      */
     public function store(Request $request)
     {
-      if(!Input::has('data')){
-        return response('No Data Sent', 400);
-      }
-      if(!Input::has('data.type')){
-        return response('No Type Specified', 400);
-      }
-      if(!Input::has('data.attributes')){
-        return response('No Attributes sent', 400);
-      }
-      if(!Input::has('data.relationships.root')){
-        return response('No Relationship sent', 400);
-      }
+      // Validation
       if(!Input::has('data.relationships.root.data.id')){
         return response('No ID sent', 400);
       }
@@ -95,20 +84,6 @@ class EtymologiesController extends Apiv1Controller
      */
      public function update(Request $request, $id)
      {
-       // Validation
-       if(!Input::has('data') || Input::get('data') == []){
-         return response('No Data Sent', 400);
-       }
-       if(!Input::has('data.type')){
-         return response('No Type Specified', 400);
-       }
-       if(Input::get('data.type') != 'etymologies'){
-         return response('Wrong Type Specified', 400);
-       }
-       if(!Input::has('data.attributes')){
-         return response('No Attributes sent', 400);
-       }
-
        // Setup
        $attrs = Input::get('data.attributes');
 

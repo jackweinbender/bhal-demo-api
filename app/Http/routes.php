@@ -33,49 +33,90 @@ Route::group([
   // Letters
   Route::get('letters', 'LettersController@index');
   Route::get('letters/{id}', 'LettersController@show');
-  Route::put('letters/{id}', 'LettersController@update');
-  Route::patch('letters/{id}', 'LettersController@update');
-  Route::post('letters/{id}', 'LettersController@attach');
+  Route::put('letters/{id}', [
+    'middleware' => 'apiValidation:letters',
+    'uses' =>'LettersController@update',
+    ]);
+  Route::patch('letters/{id}', [
+    'middleware' => 'apiValidation:letters',
+    'uses' =>'LettersController@update',
+    ]);
 
   // Root Tags
   Route::get('roots/tags', 'RootTagsController@index');
-  Route::post('roots/tags', 'RootTagsController@store');
   Route::get('roots/tags/{id}', 'RootTagsController@show');
-  Route::put('roots/tags/{id}', 'RootTagsController@update');
-  Route::patch('roots/tags/{id}', 'RootTagsController@update');
+  Route::post('roots/tags', [
+    'middleware' => 'apiValidation:roottags',
+    'uses' => 'RootTagsController@store',
+  ]);
+  Route::put('roots/tags/{id}', [
+    'middleware' => 'apiValidation:roottags',
+    'uses' => 'RootTagsController@update',
+  ]);
+  Route::patch('roots/tags/{id}', [
+    'middleware' => 'apiValidation:roottags',
+    'uses' => 'RootTagsController@update',
+  ]);
   Route::delete('roots/tags/{id}', 'RootTagsController@destroy');
 
   // Roots
   Route::get('roots', 'RootsController@index');
-  Route::post('roots', 'RootsController@store');
   Route::get('roots/{id}', 'RootsController@show');
-  Route::put('roots/{id}', 'RootsController@update');
-  Route::patch('roots/{id}', 'RootsController@update');
+  Route::post('roots', [
+    'middleware' => 'apiValidation:roots',
+    'uses' => 'RootsController@store',
+    ]);
+  Route::put('roots/{id}', [
+    'middleware' => 'apiValidation:roots',
+    'uses' => 'RootsController@update',
+  ]);
+  Route::patch('roots/{id}', [
+    'middleware' => 'apiValidation:roots',
+    'uses' => 'RootsController@update',
+  ]);
   Route::delete('roots/{id}', 'RootsController@destroy');
 
   // Etymologies
   Route::get('etymologies', 'EtymologiesController@index');
-  Route::post('etymologies', 'EtymologiesController@store');
   Route::get('etymologies/{id}', 'EtymologiesController@show');
-  Route::put('etymologies/{id}', 'EtymologiesController@update');
-  Route::patch('etymologies/{id}', 'EtymologiesController@update');
+  Route::post('etymologies', [
+    'middleware' => 'apiValidation:etymologies',
+    'uses' => 'EtymologiesController@store',
+  ]);
+  Route::put('etymologies/{id}', [
+    'middleware' => 'apiValidation:etymologies',
+    'uses' => 'EtymologiesController@update',
+  ]);
+  Route::patch('etymologies/{id}', [
+    'middleware' => 'apiValidation:etymologies',
+    'uses' => 'EtymologiesController@update',
+  ]);
   Route::delete('etymologies/{id}', 'EtymologiesController@destroy');
 
   // Cognates
   Route::get('cognates', 'CognatesController@index');
-  Route::post('cognates', 'CognatesController@store');
   Route::get('cognates/{id}', 'CognatesController@show');
-  Route::put('cognates/{id}', 'CognatesController@update');
-  Route::patch('cognates/{id}', 'CognatesController@update');
+  Route::post('cognates', [
+    'middleware' => 'apiValidation:cognates',
+    'uses' => 'CognatesController@store',
+  ]);
+  Route::put('cognates/{id}', [
+    'middleware' => 'apiValidation:cognates',
+    'uses' => 'CognatesController@update',
+  ]);
+  Route::patch('cognates/{id}', [
+    'middleware' => 'apiValidation:cognates',
+    'uses' => 'CognatesController@update',
+  ]);
   Route::delete('cognates/{id}', 'CognatesController@destroy');
 
   // Lemmas
   // Route::get('lemmas', 'LemmasController@index');
-  Route::get('lemmas/{id}', 'LemmasController@show');
+  // Route::get('lemmas/{id}', 'LemmasController@show');
 
   // Definitions
   // Route::get('definitions', 'DefinitionsController@index');
-  Route::get('definitions/{id}', 'DefinitionsController@show');
+  // Route::get('definitions/{id}', 'DefinitionsController@show');
 
   Route::get('/', function(){
     return response('BHAL API: The Biblical Hebrew and Aramaic Lexicon API.', 200);
