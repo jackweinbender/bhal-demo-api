@@ -14,6 +14,12 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        $user = App\User::create([
+          'name' => 'Test Testorson',
+          'email' => 'test@test.com',
+          'password' => 'test',
+        ]);
+
         $this->call( 'LettersTableSeederProduction' );
 
         $letters = App\Letter::get();

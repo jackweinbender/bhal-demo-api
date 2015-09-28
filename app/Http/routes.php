@@ -16,7 +16,6 @@ Route::get('/', function () {
 });
 
 Route::group([
-  "prefix" => "auth",
   "namespace" => "Auth"], function(){
 
   Route::post('login', 'AuthenticationController@loginWithCredentials');
