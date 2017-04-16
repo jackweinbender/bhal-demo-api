@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $user = App\User::create([
           'name' => 'Test Testorson',
-          'email' => 'test@test.com',
+          'email' => 'jacks@test.com',
           'password' => 'test',
         ]);
 
